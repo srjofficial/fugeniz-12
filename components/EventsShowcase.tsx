@@ -75,7 +75,7 @@ const TiltCard = ({ children, isEven }: { children: React.ReactNode, isEven: boo
 
 export default function EventsShowcase() {
     return (
-        <section id="events" className="relative min-h-[80vh] bg-black py-20 overflow-hidden">
+        <section id="events" className="relative min-h-[80vh] bg-black/80 py-20 overflow-hidden">
             {/* Background elements */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(220,38,38,0.15)_0%,rgba(0,0,0,1)_70%)]" />
 

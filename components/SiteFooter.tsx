@@ -6,7 +6,7 @@ import { FaInstagram, FaArrowRight } from "react-icons/fa";
 
 export default function Footer() {
     return (
-        <footer id="contact" className="relative w-full bg-black text-white overflow-hidden">
+        <footer id="contact" className="relative w-full bg-black/85 text-white overflow-hidden">
             {/* Large Background Text */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
                 <h2 className="font-cinzel font-bold text-6xl md:text-8xl lg:text-[12rem] tracking-widest text-red-600 whitespace-nowrap drop-shadow-[0_0_15px_rgba(255,0,0,0.5)]">
@@ -21,7 +21,7 @@ export default function Footer() {
                     {/* SNGCE Section */}
                     <div className="flex flex-col items-center md:items-start">
                         <div className="flex items-center gap-3 mb-4">
-                            <div className="h-10 md:h-12 rounded-lg overflow-hidden flex items-center justify-center shadow-[0_0_10px_rgba(220,38,38,0.5)] hover:scale-105 transition-transform duration-300">
+                            <div className="h-10 md:h-12 rounded-lg overflow-hidden flex items-center justify-center hover:scale-105 transition-transform duration-300">
                                 <img src="/home/sngce-logo.jpg" alt="SNGCE Logo" className="h-full w-auto object-cover" onError={(e) => { e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/en/thumb/5/52/SNGCE_logo.png/220px-SNGCE_logo.png' }} />
                             </div>
                         </div>
@@ -36,14 +36,15 @@ export default function Footer() {
 
                     {/* IEEE CIS Section */}
                     <div className="flex flex-col items-center md:items-start">
-                        <div className="flex items-center gap-3 mb-2">
-                            <div className="w-8 h-8 bg-gradient-to-br from-red-900 to-black rounded border border-red-500/50 flex flex-col items-center justify-center shadow-[0_0_10px_rgba(220,38,38,0.5)]">
-                                <span className="font-sans font-black text-white text-[8px] leading-none mb-0.5 mt-0.5">IEEE</span>
-                                <span className="font-sans font-bold text-red-500 text-[10px] leading-none">CIS</span>
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="h-10 md:h-12 rounded-lg overflow-hidden flex items-center justify-center hover:scale-105 transition-transform duration-300">
+                                <img
+                                    src="/home/cis.png"
+                                    alt="IEEE CIS Logo"
+                                    className="h-full w-auto object-contain"
+                                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                                />
                             </div>
-                            <h3 className="font-sans font-bold text-lg md:text-xl tracking-wider text-white">
-                                IEEE CIS
-                            </h3>
                         </div>
                         <p className="text-red-500 font-sans text-sm md:text-base tracking-wide mb-3">
                             Computational Intelligence Society
@@ -138,7 +139,7 @@ export default function Footer() {
 
                         {/* Saroj S */}
                         <Link
-                            href="https://www.instagram.com/"
+                            href="https://www.instagram.com/thesarojs/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-3 text-gray-300 hover:text-red-500 transition-colors duration-300 group"

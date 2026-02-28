@@ -1,11 +1,11 @@
 "use client";
 
-import { use, useState } from "react";
+import { use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Calendar, MapPin, ChevronDown } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowLeft, ArrowRight, Calendar, MapPin } from "lucide-react";
 import { eventsData } from "@/lib/stranger-events-data";
 import SiteFooter from "@/components/SiteFooter";
 import FloatingSpores from "@/components/FloatingSpores";
@@ -22,7 +22,6 @@ export default function EventPage({ params }: PageProps) {
     const resolvedParams = use(params);
     const eventId = resolvedParams.id;
     const event = eventsData[eventId];
-    const [isGuidelinesOpen, setIsGuidelinesOpen] = useState(false);
 
     const text3DStyle = {
         textShadow: "2px 2px 0px rgba(0,0,0,1), 4px 4px 0px rgba(0,0,0,0.5)",
@@ -56,7 +55,7 @@ export default function EventPage({ params }: PageProps) {
             <nav className="relative z-50 w-full p-6 flex items-center justify-between">
                 <Link href="/" className="group flex items-center gap-2 text-gray-400 hover:text-red-500 transition-colors">
                     <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                    <span className="font-mono text-sm uppercase tracking-widest">Back to Upside Down</span>
+                    <span className="font-mono text-sm uppercase tracking-widest">Back to Home</span>
                 </Link>
                 <div className="hidden md:flex items-center gap-2">
                     <span className="w-16 h-px bg-red-600/50" />
@@ -163,64 +162,33 @@ export default function EventPage({ params }: PageProps) {
                         </p>
                     </div>
 
-                    {/* Animated Guidelines Dropdown */}
-                    <div className="mb-12 relative z-50">
-                        <motion.button
-                            type="button"
-                            onClick={() => setIsGuidelinesOpen(!isGuidelinesOpen)}
-                            whileHover={{ scale: 1.01, y: -2 }}
-                            whileTap={{ scale: 0.98, y: 2 }}
-                            className="w-full relative py-5 px-8 bg-black/80 border-2 border-red-900/60 rounded-xl overflow-hidden shadow-[0_6px_0_rgb(153,27,27),0_15px_20px_rgba(0,0,0,0.5)] flex items-center justify-between group cursor-pointer transition-all duration-300 hover:border-red-500/80"
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 via-red-500/5 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0" />
-                            <span className="relative z-10 font-cinzel text-xl md:text-2xl text-red-500 font-bold tracking-widest uppercase flex items-center gap-4">
-                                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(239,68,68,0.8)]" />
-                                Mission Guidelines
-                            </span>
-                            <motion.div
-                                animate={{ rotate: isGuidelinesOpen ? 180 : 0 }}
-                                transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                                className="relative z-10 text-red-500 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
-                            >
-                                <ChevronDown className="w-8 h-8" />
-                            </motion.div>
-                        </motion.button>
-
-                        <AnimatePresence>
-                            {isGuidelinesOpen && (
-                                <motion.div
-                                    initial={{ height: 0, opacity: 0, y: -10 }}
-                                    animate={{ height: "auto", opacity: 1, y: 0 }}
-                                    exit={{ height: 0, opacity: 0, y: -10 }}
-                                    transition={{ type: "spring", stiffness: 100, damping: 20 }}
-                                    className="overflow-hidden"
-                                >
-                                    <div className="p-6 md:p-8 mt-4 bg-black/90 border border-red-900/50 rounded-xl shadow-[inset_0_0_20px_rgba(220,38,38,0.05)]">
-                                        <div className="prose prose-invert prose-red max-w-none font-sans text-gray-300">
-                                            <p className="mb-4 text-red-400 font-mono text-sm tracking-widest uppercase mb-6 drop-shadow-md">Protocol Directives:</p>
-                                            <ul className="space-y-4 font-medium text-lg">
-                                                <li className="flex gap-4 items-start">
-                                                    <span className="text-red-500 mt-1 font-black">❯</span>
-                                                    <span className="leading-relaxed">Registration fee is non-refundable under any circumstances.</span>
-                                                </li>
-                                                <li className="flex gap-4 items-start">
-                                                    <span className="text-red-500 mt-1 font-black">❯</span>
-                                                    <span className="leading-relaxed">Ensure all team details entered are accurate. Coordinates will be sent to the Team Leader.</span>
-                                                </li>
-                                                <li className="flex gap-4 items-start">
-                                                    <span className="text-red-500 mt-1 font-black">❯</span>
-                                                    <span className="leading-relaxed">A valid payment receipt screenshot must be uploaded. False submissions will result in immediate disqualification.</span>
-                                                </li>
-                                                <li className="flex gap-4 items-start">
-                                                    <span className="text-red-500 mt-1 font-black">❯</span>
-                                                    <span className="leading-relaxed">Maximum team size must not exceed the specified limits.</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                    {/* Mission Guidelines — static section */}
+                    <div className="mb-12">
+                        <h3 className="font-cinzel text-xl md:text-2xl text-red-500 font-bold tracking-widest uppercase flex items-center gap-3 mb-6">
+                            <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(239,68,68,0.8)]" />
+                            Mission Guidelines
+                        </h3>
+                        <div className="p-6 md:p-8 bg-black/90 border border-red-900/50 rounded-xl shadow-[inset_0_0_20px_rgba(220,38,38,0.05)]">
+                            <p className="text-red-400 font-mono text-sm tracking-widest uppercase mb-5 drop-shadow-md">Protocol Directives:</p>
+                            <ul className="space-y-4 font-medium text-lg font-sans text-gray-300">
+                                <li className="flex gap-4 items-start">
+                                    <span className="text-red-500 mt-1 font-black">❯</span>
+                                    <span className="leading-relaxed">Registration fee is non-refundable under any circumstances.</span>
+                                </li>
+                                <li className="flex gap-4 items-start">
+                                    <span className="text-red-500 mt-1 font-black">❯</span>
+                                    <span className="leading-relaxed">Ensure all team details entered are accurate. Coordinates will be sent to the Team Leader.</span>
+                                </li>
+                                <li className="flex gap-4 items-start">
+                                    <span className="text-red-500 mt-1 font-black">❯</span>
+                                    <span className="leading-relaxed">A valid payment receipt screenshot must be uploaded. False submissions will result in immediate disqualification.</span>
+                                </li>
+                                <li className="flex gap-4 items-start">
+                                    <span className="text-red-500 mt-1 font-black">❯</span>
+                                    <span className="leading-relaxed">Maximum team size must not exceed the specified limits.</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
 
                     {/* Register Action */}

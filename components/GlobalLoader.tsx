@@ -12,7 +12,7 @@ export default function GlobalLoader() {
         // Initial load animation duration
         const timeout = setTimeout(() => {
             setLoading(false);
-        }, 4000); // 4 seconds for slow, eerie cinematic reveal
+        }, 2000); // 2 seconds
 
         return () => clearTimeout(timeout);
     }, []);
@@ -42,7 +42,7 @@ export default function GlobalLoader() {
 
                     <div className="relative z-10 flex flex-col items-center">
                         {/* Stunning Logo Reveal */}
-                        <div className="relative w-[250px] h-[80px] md:w-[350px] md:h-[120px] mb-8">
+                        <div className="relative w-[160px] h-[160px] md:w-[200px] md:h-[200px] mb-8">
                             {/* Animated Red Aura Behind Logo */}
                             <motion.div
                                 animate={{
@@ -62,13 +62,13 @@ export default function GlobalLoader() {
                                 initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
                                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                                 transition={{ duration: 1.5, ease: "easeOut" }}
-                                className="relative w-full h-full z-10 overflow-hidden"
+                                className="relative w-full h-full z-10 overflow-hidden rounded-full ring-2 ring-red-600/60 ring-offset-2 ring-offset-black"
                             >
                                 <Image
                                     src="/home/f12-logo.png"
                                     alt="FUGENIZ 12th Loading"
                                     fill
-                                    className="object-contain drop-shadow-[0_0_15px_rgba(255,0,0,0.6)]"
+                                    className="object-cover drop-shadow-[0_0_15px_rgba(255,0,0,0.6)]"
                                     priority
                                 />
 
@@ -87,7 +87,7 @@ export default function GlobalLoader() {
                             <motion.div
                                 initial={{ width: "0%" }}
                                 animate={{ width: "100%" }}
-                                transition={{ duration: 3.5, ease: "easeInOut" }}
+                                transition={{ duration: 1.8, ease: "easeInOut" }}
                                 className="absolute top-0 left-0 h-full bg-gradient-to-r from-red-600 via-red-400 to-red-600 shadow-[0_0_10px_rgba(255,0,0,0.8)]"
                             />
                         </div>
