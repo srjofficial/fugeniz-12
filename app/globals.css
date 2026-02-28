@@ -1,0 +1,516 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    /* Pure Black */
+    --foreground: 0 0% 90%;
+    --card: 0 0% 3%;
+    --card-foreground: 0 0% 90%;
+    --popover: 0 0% 3%;
+    --popover-foreground: 0 0% 90%;
+    --primary: 350 100% 45%;
+    /* Blood Red */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 90%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 350 100% 45%;
+    /* Blood Red */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 10%;
+    --input: 0 0% 10%;
+    --ring: 350 100% 45%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1a1a1a;
+  border-radius: 3px;
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+.animate-marquee-slow {
+  animation: marquee 40s linear infinite;
+}
+
+/* Scrolling text */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.scroll-left {
+  animation: scroll-left 15s linear infinite;
+}
+
+/* Glow effect */
+.glow-red {
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.5), 0 0 40px rgba(239, 68, 68, 0.2);
+}
+
+/* Grid background pattern */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Noise overlay */
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Fade in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Pulse border */
+@keyframes pulse-border {
+
+  0%,
+  100% {
+    border-color: rgba(239, 68, 68, 0.3);
+  }
+
+  50% {
+    border-color: rgba(239, 68, 68, 0.8);
+  }
+}
+
+.pulse-border {
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Slow beam/heartbeat glow — like a pulse on a monitor */
+@keyframes beam-pulse {
+
+  0%,
+  100% {
+    text-shadow: 0 0 0px rgba(220, 38, 38, 0), 0 0 0px rgba(220, 38, 38, 0);
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  15% {
+    text-shadow: 0 0 20px rgba(220, 38, 38, 0.6), 0 0 60px rgba(220, 38, 38, 0.2), 0 0 100px rgba(220, 38, 38, 0.08);
+    color: rgba(255, 255, 255, 1);
+  }
+
+  30% {
+    text-shadow: 0 0 4px rgba(220, 38, 38, 0.1), 0 0 10px rgba(220, 38, 38, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  40% {
+    text-shadow: 0 0 12px rgba(220, 38, 38, 0.4), 0 0 40px rgba(220, 38, 38, 0.15);
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  55% {
+    text-shadow: 0 0 0px rgba(220, 38, 38, 0), 0 0 0px rgba(220, 38, 38, 0);
+    color: rgba(255, 255, 255, 0.85);
+  }
+}
+
+.animate-beam {
+  animation: beam-pulse 6s ease-in-out infinite;
+}
+
+/* Floating sparkles for fire effect */
+@keyframes float-sparkle {
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateY(-100px) translateX(20px) scale(1.2);
+    opacity: 0.8;
+  }
+
+  90% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes float-sparkle-2 {
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  60% {
+    transform: translateY(-120px) translateX(-30px) rotate(180deg);
+    opacity: 0.6;
+  }
+
+  95% {
+    opacity: 0;
+  }
+}
+
+.animate-float-sparkle {
+  animation: float-sparkle 4s ease-in-out infinite;
+}
+
+.animate-float-sparkle-2 {
+  animation: float-sparkle-2 5s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+/* Spin Slow Animation */
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spinSlow {
+  animation: spinSlow 25s linear infinite;
+}
+
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 15s linear infinite;
+}
+
+
+@keyframes subtleFlicker {
+  0% {
+    opacity: 1;
+    text-shadow: 0 0 6px rgba(255, 0, 0, 0.4);
+  }
+
+  5% {
+    opacity: 0.95;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+  }
+
+  10% {
+    opacity: 1;
+    text-shadow: 0 0 6px rgba(255, 0, 0, 0.4);
+  }
+
+  15% {
+    opacity: 0.97;
+    text-shadow: 0 0 14px rgba(255, 0, 0, 0.7);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  40% {
+    opacity: 0.96;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0.98;
+    text-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
+  }
+
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 6px rgba(255, 0, 0, 0.4);
+  }
+}
+
+.flicker-text {
+  animation: subtleFlicker 3s infinite ease-in-out;
+}
+
+
+.aura-glow {
+  color: #ffd700;
+  text-shadow:
+    0 0 6px rgba(255, 215, 0, 0.6),
+    0 0 12px rgba(255, 200, 0, 0.7),
+    0 0 20px rgba(255, 180, 0, 0.8);
+}
+
+
+/* Loading Screen Animations */
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinReverse {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 6s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spinReverse 8s linear infinite;
+}
+
+/* ---------------------------------------------------- */
+/* STRANGER THINGS ADVANCED CINEMATIC ANIMATIONS        */
+/* ---------------------------------------------------- */
+
+/* 1. Lightning Flash Overlay */
+@keyframes lightning-flash {
+
+  0%,
+  95%,
+  98%,
+  100% {
+    opacity: 0;
+  }
+
+  96% {
+    opacity: 0.8;
+  }
+
+  97% {
+    opacity: 0.2;
+  }
+
+  99% {
+    opacity: 1;
+  }
+}
+
+.animate-lightning {
+  animation: lightning-flash 10s infinite;
+  pointer-events: none;
+}
+
+/* 2. Stranger Things Text Glitch & Separation */
+@keyframes stranger-glitch {
+  0% {
+    transform: translate(0);
+    text-shadow: 0 0 10px rgba(220, 38, 38, 0.8);
+  }
+
+  20% {
+    transform: translate(-2px, 1px);
+    text-shadow: 2px 0 15px rgba(220, 38, 38, 1), -2px 0 5px rgba(0, 0, 255, 0.5);
+  }
+
+  21% {
+    transform: translate(0);
+    text-shadow: 0 0 10px rgba(220, 38, 38, 0.8);
+  }
+
+  45% {
+    transform: translate(0);
+    text-shadow: 0 0 10px rgba(220, 38, 38, 0.8);
+  }
+
+  46% {
+    transform: translate(2px, -1px);
+    text-shadow: -2px 0 20px rgba(220, 38, 38, 1), 2px 0 5px rgba(0, 0, 255, 0.5);
+  }
+
+  47% {
+    transform: translate(0);
+    text-shadow: 0 0 10px rgba(220, 38, 38, 0.8);
+  }
+
+  100% {
+    transform: translate(0);
+    text-shadow: 0 0 10px rgba(220, 38, 38, 0.8);
+  }
+}
+
+.animate-stranger-glitch {
+  animation: stranger-glitch 5s infinite normal;
+  display: inline-block;
+}
+
+/* 3. Text Flicker Outline (Neon Sign effect) */
+@keyframes text-flicker-neon {
+
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+    opacity: 1;
+    text-shadow:
+      0 0 5px #fff,
+      0 0 10px #fff,
+      0 0 20px #dc2626,
+      0 0 40px #dc2626,
+      0 0 80px #dc2626,
+      0 0 90px #dc2626;
+  }
+
+  20%,
+  24%,
+  55% {
+    opacity: 0.4;
+    text-shadow: none;
+  }
+}
+
+.animate-neon-flicker {
+  animation: text-flicker-neon 4s infinite alternate;
+}
+
+/* 4. Upside Down Spores */
+@keyframes spore-drift {
+  0% {
+    transform: translateY(100vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  90% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateY(-20vh) translateX(100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.spore {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  z-index: 15;
+}
+
+/* 5. Smart Cursor Hiding */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor {
+    display: none !important;
+  }
+}

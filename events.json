@@ -1,0 +1,153 @@
+[
+  {
+    "Department ": "ECE",
+    "Event Name": "3S BASH",
+    "Description": "3s Football is an exciting mini-football tournament featuring teams of three players on the field at a time, with up to two substitutes, making each match fast, dynamic, and action-packed. It’s designed to be energetic, competitive, and inclusive — perfect for players who enjoy teamwork, quick decision-making, and non-stop play",
+    "Event coordinator1": "Hisham Ebrahim",
+    "Phone number ": 9633582362,
+    "Event coordinator2": "Dheeraj S.M",
+    "Phone number  2": 8078070248
+  },
+  {
+    "Department ": "ECE",
+    "Event Name": "TECH TRAVERSE",
+    "Description": "Are you building the future? Whether your project runs on code, or circuits, the Project Expo 2026 is your stage. We are breaking down the silos between departments to celebrate pure engineering excellence.\nThis is an open-call for all engineering batches to showcase their most innovative and creative solutions. If you have a problem-solving mindset, we have a booth for you.",
+    "Event coordinator1": "Bazil Abee",
+    "Phone number ": 7736851614,
+    "Event coordinator2": "Ryan Ajil",
+    "Phone number  2": 9946252194
+  },
+  {
+    "Department ": "AD",
+    "Event Name": "CODERIFT",
+    "Description": "Coderift is a next-gen tech mystery hunt\n\nthat pushes participants beyond ordinary puzzles. This event challenges teams to decode patterns, interpret hidden systems, and uncover layered clues spread across both digital and physical spaces. Instead of obvious hints, players must rely on logic, observation, and technical intuition to progress. As the game evolves, teams must adapt quickly, connect subtle cues, and think strategically under pressure. Designed to test curiosity, analytical thinking, and problem-solving skills, Coderift delivers an immersive experience where only the sharpest minds reach the\n\nfinal breakthrough. 2-4 Member team. 10,000 price pool.",
+    "Event coordinator1": "Ansaj",
+    "Phone number ": 9895155001,
+    "Event coordinator2": "Athul",
+    "Phone number  2": 9645028366
+  },
+  {
+    "Department ": "AD",
+    "Event Name": "FRAMEDROP",
+    "Description": "Framedrop is a high-intensity, time-based team challenge that blends rapid mini-games with competitive PS5 and PC gameplay. Each team consists of three members, with each player choosing a different game station strategically. Individual completion times are recorded,\n\nand the team's final score is calculated\n\nbased on the combined average time.\n\nOpen to participants from all departments, Framedrop emphasizes speed,\n\ncoordination, and smart decision-making. Fast, fair, and electrifying, the team with the lowest overall time claims victory and the grand prize.",
+    "Event coordinator1": ".",
+    "Phone number ": ".",
+    "Phone number  2": "."
+  },
+  {
+    "Department ": "EEE",
+    "Event Name": "HACKTRONICS ",
+    "Description": "Hacktronics is a 12-hour hardware-based hackathon where teams design and build innovative hardware–software solutions to real-world problems. The registration fee is ₹250 per team, with a maximum of 2 participants per team, and the event features a total prize pool of ₹11,000.",
+    "Event coordinator1": "Abraham",
+    "Phone number ": 8547436923,
+    "Event coordinator2": "Ashker",
+    "Phone number  2": 9946436741
+  },
+  {
+    "Department ": "EEE",
+    "Event Name": "REAL STEEL",
+    "Description": "Real Steel is a high-intensity Robo War competition where teams battle custom-built robots in an enclosed arena. The registration fee is ₹200 per team, with a maximum of 4 participants per team, and the event offers a total prize pool of ₹15,000.",
+    "Event coordinator1": "Akshai",
+    "Phone number ": 9048201463,
+    "Event coordinator2": "Arshad",
+    "Phone number  2": 9656132272
+  },
+  {
+    "Department ": "CE",
+    "Event Name": "Bridge Building competition  ",
+    "Description": "The Department of Civil Engineering presents the Bridge Building Competitio n, a practical and exciting event where participants design and build a model bridge using materials like popsicle sticks and other utilities within a fixed time. Bridges will be tested for strength, stability, and load capacity. Students can participate individually or in teams of up to four. Cash prizes: ₹3500 (1st Prize) and ₹1500 (2nd Prize), along with recognition and activity points.",
+    "Event coordinator1": "VINAYAK MANOHARAN",
+    "Phone number ": 974638658,
+    "Event coordinator2": "DELLA MARIYA GEORGE",
+    "Phone number  2": 9496740039
+  },
+  {
+    "Department ": "CE",
+    "Event Name": "Concrete cube making competition",
+    "Description": "The Department of Civil Engineering presents the Concrete Cube Competition, where participants prepare and cast concrete cubes using provided materials, and winners are decided based on compressive strength test results. Open to individuals or teams up to four members. Cash prizes: ₹5000 (1st) and ₹2500 (2nd).",
+    "Event coordinator1": "Mathews Thomas",
+    "Phone number ": 7510567627,
+    "Event coordinator2": "Aswin P Nair",
+    "Phone number  2": 6238701144
+  },
+  {
+    "Department ": "CSE",
+    "Event Name": "CODE AND CHAOS",
+    "Description": "A 14 hour overnight hackathon based on the theme of Sustainable development where particiants have to build functional and scalable solutions for socially relevant problems. Individual participants or team with 2 to 4 members. Registration fees Rs.100 per participant. Prize pool of Rs. 25000",
+    "Event coordinator1": "Benedict Chacko Mathew",
+    "Phone number ": 6282031325,
+    "Event coordinator2": "Kripa Sajo",
+    "Phone number  2": 8714031195
+  },
+  {
+    "Department ": "CSE",
+    "Event Name": "TECH ARENA",
+    "Description": "A three level technical competition consisting file decryption, technical quizzes, and a final startup pitch. Team with 2 members. Registration fees: Rs.100 per team. Prize: Rs.7000(1st), Rs.3000(2nd).",
+    "Event coordinator1": "Sarah Swetha Thomas",
+    "Phone number ": 8714793842,
+    "Event coordinator2": "Eldho Aby",
+    "Phone number  2": 8281469701
+  },
+  {
+    "Department ": "CSE",
+    "Event Name": "STRANGER THINGS",
+    "Description": "A theme based treasure hunt event where participants work in teams to solve puzzles, follow clues and survive multiple elimination rounds. Team of 4. Registration fees: Rs.50 per participant. Prize: Rs.7000(1st), Rs.3000(2nd) .",
+    "Event coordinator1": "Deon Johny",
+    "Phone number ": 9188083702,
+    "Event coordinator2": "Keerthana K Anil",
+    "Phone number  2": 7306749927
+  },
+  {
+    "Department ": "CSE",
+    "Event Name": "QUIRK QUEST",
+    "Description": "A creative tech inspired competition where participants go through three levels- a puzzle challenge, promp making round and a final craft and quiz fusion round. Team of 2, Rs.50 per head. Prize: Rs.3000(1st), Rs.2000(2nd).",
+    "Event coordinator1": "Neethu Cheriyan",
+    "Phone number ": 9188654452,
+    "Event coordinator2": "Brijil Thengumthottathil",
+    "Phone number  2": 9895107690
+  },
+  {
+    "Department ": "IT",
+    "Event Name": "SECUREBREAK – ONE-DAY HANDS-ON EVENT",
+    "Description": "A full-day, industry-style penetration testing experience where students learn to think like attackers and act like professionals. The event follows the real pentest lifecycle—Recon → Exploitation → Reporting—with live demos, hands-on labs, and a competitive CTF. Participants practice web application attacks, privilege escalation, and professional reporting using standard tools and OWASP methodologies, all within legal and ethical boundaries.",
+    "Event coordinator1": "Abhijit Shaji",
+    "Phone number ": 9526494491,
+    "Event coordinator2": "Nivin K Sunil",
+    "Phone number  2": 8714930113
+  },
+  {
+    "Department ": "IT",
+    "Event Name": "DRONEX: FROM TOY TO TACTICAL",
+    "Description": "A Complete Guide to Drone Applications is a hands-on workshop that introduces the fundamentals of drone technology and its real-world uses. Participants explore drone types, components, safety, and live flight demonstrations while learning how drones are transforming industries and creating new career opportunities.",
+    "Event coordinator1": "Joyal Sojan",
+    "Phone number ": 6282657146,
+    "Event coordinator2": "Anusha Saji",
+    "Phone number  2": 8547935816
+  },
+  {
+    "Department ": "CG",
+    "Event Name": "FUNFINITY: More Games More Madness",
+    "Description": "Funfinity is your one-stop destination for unlimited fun and unforgettable moments. A vibrant space filled with games, challenges, and endless excitement — because here, the fun never ends.",
+    "Event coordinator1": "Lewin Johnson",
+    "Phone number ": 9656843500,
+    "Event coordinator2": "Job T Inchanattu",
+    "Phone number  2": 9745340304
+  },
+  {
+    "Department ": "CG",
+    "Event Name": "The Creator’s Hub : Turn imagination into impact",
+    "Description": "Creator’s Hub is a hands-on workshop focused on graphic design and video editing, designed to help students master visual creativity and bring their ideas to life. Learn, create, and stand out",
+    "Event coordinator1": "Alwin Lal",
+    "Phone number ": 9744531108,
+    "Event coordinator2": "Kevin Joseph",
+    "Phone number  2": 9074611663
+  },
+  {
+    "Department ": "ME",
+    "Event Name": "CAD MASTERS"
+  },
+  {
+    "Department ": "ME",
+    "Event Name": "ECU tuning workshop "
+  }
+]
