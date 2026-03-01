@@ -8,25 +8,25 @@ export default function MenuButton() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50">
+        <div className="relative z-50">
             <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="relative w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center focus:outline-none group active:scale-95 transition-transform"
                 aria-label="Menu"
             >
                 {/* Clockwise Outer Semi-Circle */}
-                <motion.div
+                {/* <motion.div
                     animate={{ rotate: 360 }}
                     transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                     className="absolute inset-0 border-2 border-red-600 rounded-full border-t-transparent border-b-transparent opacity-80"
-                />
+                /> */}
 
                 {/* Anti-Clockwise Inner Semi-Circle */}
-                <motion.div
+                {/* <motion.div
                     animate={{ rotate: -360 }}
                     transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
                     className="absolute inset-2 border-2 border-red-500 rounded-full border-l-transparent border-r-transparent opacity-90"
-                />
+                /> */}
 
                 {/* Hamburger Lines */}
                 <div className="flex flex-col gap-1.5 z-10 scale-75 sm:scale-100">

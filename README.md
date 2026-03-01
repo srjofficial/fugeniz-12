@@ -1,151 +1,194 @@
-# 🎪 FUGENIZ 12th — Official Event Website
+# FUGENIZ 12th — IEEE CIS Student Branch Chapter, SNGCE
 
-> *"Enter the Upside Down."*
-> The official website for **FUGENIZ 12th**, the annual technical fest of **Sree Narayana Gurukulam College of Engineering**, organised by the **IEEE Computational Intelligence Society Student Branch**.
-
----
-
-## ✨ Live Preview
-
-> Deploy to Vercel or run locally — see below.
+> **An immersive, Stranger Things-themed event website** built for the 12th edition of FUGENIZ, the annual technical festival of the IEEE Computational Intelligence Society (CIS) Student Branch Chapter at Sree Narayana Gurukulam College of Engineering (SNGCE).
 
 ---
 
-## 🖼️ Features
+## 🌐 Live Preview
 
-| Feature | Details |
-|---|---|
-| 🎬 **Scroll Animation** | Apple-style frame-by-frame canvas animation driven by GSAP ScrollTrigger |
-| 📱 **Responsive** | Separate animation sets for mobile (`vdo2`) and desktop (`upscaled video`) |
-| 🔴 **Cinematic Loader** | Full-screen loader with animated logo reveal & progress bar |
-| 🃏 **Event Cards** | Tilt-effect event showcase with Framer Motion |
-| 👁️ **Custom Cursor** | Themed custom cursor throughout the site |
-| 🌑 **Last-frame Persist** | Final animation frame persists as background behind the rest of the page |
-| 🔗 **Event Detail Pages** | Dynamic event pages with guidelines, registration fee & CTA |
-| 📝 **Registration Flow** | Dedicated register page per event |
-| 🦶 **Footer** | Team contacts, social links, college & IEEE CIS branding |
+The site is designed to be deployed on [Vercel](https://vercel.com). After cloning and configuring the environment variable, run `npm run dev` to view locally or push to Vercel for production.
+
+---
+
+## 🧠 Project Overview
+
+FUGENIZ 12th is a single-page web application with the following core sections:
+
+- **Loading Screen** — Animated IEEE CIS logo entry with a dark, atmospheric loader
+- **Apple-Style Scroll Animation** — Frame-by-frame image sequence (like Apple product reveals) controlled by scroll position using GSAP ScrollTrigger + Canvas
+- **IEEE CIS Chapter Title + MARCH 5 Glitch** — Glitch-effect text displayed throughout the scroll animation
+- **Events Showcase** — Interactive event cards for "Scan & Seek" and "Pixel Decode" with expandable mission guidelines
+- **Registration System** — Per-event registration forms with payment QR code, receipt upload, and Google Sheets backend via Apps Script
+- **Site Footer** — Community logos, social links, contact information, and organizer details
+
+---
+
+## 📁 Project Structure
+
+```
+fugeniz-12/
+├── app/                        # Next.js App Router pages
+│   ├── layout.tsx              # Root layout with fonts, metadata, GlobalLoader, SmoothScroll
+│   ├── page.tsx                # Main homepage (Hero + Scroll Anim + Events + Footer)
+│   ├── events/
+│   │   └── [id]/
+│   │       ├── page.tsx        # Individual event detail page
+│   │       └── register/
+│   │           └── page.tsx    # Event registration form with file upload
+│   └── api/
+│       └── register/
+│           └── route.ts        # API route — sends form data + receipt to Google Sheets
+│
+├── components/                 # All React components
+│   ├── GlobalLoader.tsx        # Full-screen loading animation with IEEE CIS logo
+│   ├── SmoothScroll.tsx        # Lenis smooth scroll + GSAP ScrollTrigger integration
+│   ├── StrangerThingsHero.tsx  # Fixed navbar (Menu button only)
+│   ├── MenuButton.tsx          # Animated hamburger menu with nav overlay
+│   ├── TenaniScrollAnimation.tsx # Apple-style scroll sequence (canvas + GSAP)
+│   ├── EventsShowcase.tsx      # Events grid section
+│   ├── event-card.tsx          # Individual event card component
+│   ├── drishya-event-card.tsx  # Alternative event card variant
+│   ├── SiteFooter.tsx          # Footer with logos, socials, contacts
+│   ├── CustomCursor.tsx        # Custom red animated cursor
+│   ├── FloatingSpores.tsx      # Particle/spore atmosphere animation
+│   └── ...
+│
+├── lib/
+│   ├── stranger-events-data.tsx # Event data (title, rules, fees, images)
+│   └── utils.ts                # Tailwind utility helper (cn)
+│
+├── hooks/
+│   └── use-mobile.tsx          # Hook to detect mobile breakpoint
+│
+├── public/
+│   ├── frames/
+│   │   ├── tenani/             # Desktop scroll animation frames (WebP images)
+│   │   └── tenani-mobile/      # Mobile scroll animation frames (WebP images)
+│   ├── home/                   # Static assets (logos, hero images, QR code)
+│   │   ├── cis.png             # IEEE CIS logo (used in loader)
+│   │   ├── f12-logo.png        # FUGENIZ 12 logo
+│   │   ├── ieee_sb_sngce_logo_png-1.png
+│   │   ├── scan-seek.png       # Event poster image
+│   │   ├── pixel-decode.png    # Event poster image
+│   │   └── upi-qr.jpg          # UPI payment QR code
+│   └── fonts/                  # Custom local fonts (Asoka, Creepster, Cinzel)
+│
+├── styles/
+│   └── globals.css             # Global CSS including glitch effect keyframes
+│
+├── .env.local                  # 🔑 Environment variables (see below)
+├── next.config.mjs             # Next.js configuration
+├── tailwind.config.ts          # Tailwind CSS configuration with custom fonts/colors
+├── tsconfig.json               # TypeScript config
+├── package.json                # Dependencies and scripts
+├── extract-frames.mjs          # Node script to extract desktop frames from a video
+└── extract-frames-mobile.mjs   # Node script to extract mobile frames from a video
+```
+
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env.local` file in the project root (already included in this repo):
+
+```env
+GOOGLE_SHEET_URL="https://script.google.com/macros/s/YOUR_APPS_SCRIPT_DEPLOYMENT_ID/exec"
+```
+
+### How to set up your own Google Sheet backend:
+1. Create a Google Sheet for collecting registrations.
+2. Go to **Extensions → Apps Script** and deploy a Web App that handles `POST` requests.
+3. Replace the `GOOGLE_SHEET_URL` value with your deployment URL.
+
+> ⚠️ The included URL in `.env.local` is the original deployment — it may still be active. If you want your own sheet, replace it.
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+
-- npm or yarn
+
+- **Node.js** v18+ 
+- **npm** (or pnpm/yarn)
 
 ### Installation
 
 ```bash
-# Clone the repo
+# Clone the repository
 git clone https://github.com/srjofficial/fugeniz-12.git
 cd fugeniz-12
 
 # Install dependencies
 npm install
-```
 
-### Run Development Server
-
-```bash
+# Start the development server
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
----
-
-## 🎞️ Regenerating Animation Frames
-
-The scroll animation uses pre-extracted JPEG frames stored in `public/frames/`.  
-If you replace the source videos, regenerate frames using the included scripts:
+### Build for Production
 
 ```bash
-# Desktop frames (from upscaled-video.mp4)
+npm run build
+npm run start
+```
+
+### Deploy to Vercel
+
+1. Push to GitHub (already done).
+2. Go to [vercel.com](https://vercel.com) → **New Project** → import this repo.
+3. Add the environment variable `GOOGLE_SHEET_URL` in Vercel project settings.
+4. Deploy!
+
+---
+
+## 📦 Tech Stack & Libraries
+
+| Category | Library / Tool | Version | Purpose |
+|---|---|---|---|
+| **Framework** | [Next.js](https://nextjs.org/) | 16.1.6 | React framework with App Router |
+| **Language** | TypeScript | 5.7.3 | Type-safe development |
+| **Styling** | Tailwind CSS | ^3.4 | Utility-first CSS framework |
+| **Animation** | [GSAP](https://gsap.com/) | ^3.14 | Scroll-driven canvas animation |
+| **Animation** | [Framer Motion](https://www.framer.com/motion/) | ^12.x | UI component animations |
+| **Smooth Scroll** | [Lenis](https://github.com/darkroomengineering/lenis) | ^1.3 | Smooth scroll + GSAP sync |
+| **UI Primitives** | [Radix UI](https://www.radix-ui.com/) | various | Accessible UI components |
+| **Icons** | [Lucide React](https://lucide.dev/) | ^0.544 | Icon set |
+| **Icons** | [React Icons](https://react-icons.github.io/react-icons/) | ^5.5 | Additional icons (FaInstagram, etc.) |
+| **Fonts** | Google Fonts (Cinzel, Space Grotesk, JetBrains Mono) | — | Typography |
+| **Fonts** | Local (Asoka, Creepster) | — | Custom display fonts |
+
+---
+
+## 🎬 Scroll Animation — Frame Extraction
+
+The Apple-style scroll animation uses a pre-extracted frame sequence (WebP images). If you want to regenerate frames from a video:
+
+```bash
+# Desktop frames (output to public/frames/tenani/)
 node extract-frames.mjs
 
-# Mobile frames (from vdo2.mp4)
+# Mobile frames (output to public/frames/tenani-mobile/)
 node extract-frames-mobile.mjs
 ```
 
-> Source videos should be placed in the `vdo/` directory.
+> These scripts require **ffmpeg** to be installed and available in your PATH.
 
 ---
 
-## 🗂️ Project Structure
+## 🏛️ Organizers
 
-```
-fugeniz-12/
-├── app/
-│   ├── page.tsx                  # Home page
-│   ├── layout.tsx                # Root layout + fonts + metadata
-│   ├── template.tsx              # Re-mounts on navigation (scroll reset)
-│   └── events/[id]/
-│       ├── page.tsx              # Dynamic event detail page
-│       └── register/page.tsx    # Registration page
-├── components/
-│   ├── TenaniScrollAnimation.tsx # 🎬 Main scroll animation (GSAP + Canvas)
-│   ├── StrangerThingsHero.tsx    # Fixed navbar
-│   ├── EventsShowcase.tsx        # Event cards grid
-│   ├── GlobalLoader.tsx          # Cinematic loader screen
-│   ├── SiteFooter.tsx            # Footer
-│   ├── MenuButton.tsx            # Animated nav menu
-│   ├── CustomCursor.tsx          # Custom cursor
-│   └── FloatingSpores.tsx        # Atmospheric particle effect
-├── lib/
-│   └── stranger-events-data.tsx  # All event data (title, desc, image, fee…)
-├── public/
-│   ├── frames/
-│   │   ├── tenani/               # 192 desktop frames
-│   │   └── tenani-mobile/        # 192 mobile frames
-│   └── home/                     # Logo & banner assets
-├── extract-frames.mjs            # Desktop frame extractor
-└── extract-frames-mobile.mjs     # Mobile frame extractor
-```
+**IEEE Computational Intelligence Society Student Branch Chapter**  
+Sree Narayana Gurukulam College of Engineering (SNGCE)  
+Kolenchery, Kerala, India
 
----
-
-## 🛠️ Tech Stack
-
-| Technology | Purpose |
-|---|---|
-| **Next.js 16** | React framework with App Router |
-| **TypeScript** | Type safety throughout |
-| **GSAP + ScrollTrigger** | Scroll-driven frame animation |
-| **Framer Motion** | Event card & UI animations |
-| **Tailwind CSS** | Utility-first styling |
-| **HTML5 Canvas** | High-performance frame rendering |
-| **fluent-ffmpeg** | Video frame extraction (dev script) |
-
----
-
-## 🎭 Events
-
-- 🔓 **Pixel Decode** — Cyber security challenge
-- 🔍 **Scan & Seek** — QR-based treasure hunt
-- *(more events in `lib/stranger-events-data.tsx`)*
-
----
-
-## 👥 Team
-
-| Role | Name |
-|---|---|
-| IEEE CIS Secretary | Riyan |
-| IEEE CIS Chair | Abinson |
-| Chapter Advisor | Krishnaindu K.S |
-
-**Website Built by:** Abinson Babu · Parthip Sasidharan · Saroj S
+- 🌐 College: [sngce.ac.in](https://sngce.ac.in)
+- 🔗 LinkedIn: [IEEE CIS SNGCE](https://www.linkedin.com/company/ieee-cis-sngce/)
+- 📸 Instagram: [@ieee_sngce_cis](https://www.instagram.com/ieee_sngce_cis)
 
 ---
 
 ## 📄 License
 
-This project is for educational and event purposes. All rights reserved © FUGENIZ 12th, SNGCE IEEE CIS.
-
----
-
-<div align="center">
-  <strong>SREE NARAYANA GURUKULAM COLLEGE OF ENGINEERING</strong><br/>
-  <em>IEEE Computational Intelligence Society Student Branch</em><br/><br/>
-  <code>MARCH 5</code>
-</div>
+This project is for educational and event-promotion purposes. All rights reserved by IEEE CIS Student Branch Chapter, SNGCE.

@@ -236,7 +236,7 @@ export default function RegistrationPage({ params }: PageProps) {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     {/* Row 1: Team Leader */}
                                     <div className="space-y-4">
-                                        <label className="text-red-500 font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase font-bold flex items-center gap-2">
+                                        <label htmlFor="fullname" className="text-red-500 font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase font-bold flex items-center gap-2">
                                             <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse" />
                                             Team Leader Full Name
                                         </label>
@@ -246,8 +246,10 @@ export default function RegistrationPage({ params }: PageProps) {
                                             </div>
                                             <input
                                                 required
+                                                id="fullname"
                                                 name="fullname"
                                                 type="text"
+                                                autoComplete="name"
                                                 placeholder="Who is leading this mission?"
                                                 className="w-full bg-black/80 border-b-2 border-red-900/50 px-10 py-5 focus:outline-none focus:border-red-500 focus:bg-red-900/10 transition-all text-white placeholder:text-zinc-700 font-cinzel text-lg tracking-widest rounded-t-lg"
                                             />
@@ -256,24 +258,36 @@ export default function RegistrationPage({ params }: PageProps) {
 
                                     {/* Number of Members */}
                                     <div className="space-y-2 group">
-                                        <label className="block font-mono text-xs uppercase tracking-widest text-gray-500 group-focus-within:text-red-500 transition-colors" style={text3DStyle}>
-                                            Number of Team Members (Max 3)
+                                        <label htmlFor="teamSize" className="block font-mono text-xs uppercase tracking-widest text-gray-500 group-focus-within:text-red-500 transition-colors" style={text3DStyle}>
+                                            {eventId === "scan-seek"
+                                                ? "Number of Team Members (2–3)"
+                                                : "Number of Team Members (1–2)"}
                                         </label>
                                         <select
                                             required
+                                            id="teamSize"
                                             name="teamSize"
+                                            autoComplete="off"
                                             className="w-full bg-black/50 border border-zinc-800 rounded-lg px-4 py-4 focus:outline-none focus:border-red-600 transition-all text-white appearance-none shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)]"
                                         >
                                             <option value="">Select count</option>
-                                            <option value="1">1 (Solo)</option>
-                                            <option value="2">2 Members</option>
-                                            <option value="3">3 Members</option>
+                                            {eventId === "scan-seek" ? (
+                                                <>
+                                                    <option value="2">2 Members</option>
+                                                    <option value="3">3 Members</option>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <option value="1">1 (Solo)</option>
+                                                    <option value="2">2 Members</option>
+                                                </>
+                                            )}
                                         </select>
                                     </div>
 
                                     {/* Row 3: College */}
                                     <div className="space-y-4 md:col-span-2">
-                                        <label className="text-red-500 font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase font-bold flex items-center gap-2">
+                                        <label htmlFor="college" className="text-red-500 font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase font-bold flex items-center gap-2">
                                             <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse" />
                                             College Name
                                         </label>
@@ -283,8 +297,10 @@ export default function RegistrationPage({ params }: PageProps) {
                                             </div>
                                             <input
                                                 required
+                                                id="college"
                                                 name="college"
                                                 type="text"
+                                                autoComplete="organization"
                                                 placeholder="Where do you hail from?"
                                                 className="w-full bg-black/80 border-b-2 border-red-900/50 px-10 py-5 focus:outline-none focus:border-red-500 focus:bg-red-900/10 transition-all text-white placeholder:text-zinc-700 font-cinzel text-lg tracking-widest rounded-t-lg"
                                             />
@@ -293,7 +309,7 @@ export default function RegistrationPage({ params }: PageProps) {
 
                                     {/* Row 4: Contact Info */}
                                     <div className="space-y-4">
-                                        <label className="text-red-500 font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase font-bold flex items-center gap-2">
+                                        <label htmlFor="phone" className="text-red-500 font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase font-bold flex items-center gap-2">
                                             <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse" />
                                             Team Leader Phone
                                         </label>
@@ -303,8 +319,10 @@ export default function RegistrationPage({ params }: PageProps) {
                                             </div>
                                             <input
                                                 required
+                                                id="phone"
                                                 name="phone"
                                                 type="tel"
+                                                autoComplete="tel"
                                                 placeholder="+91 XXXX XXX XXX"
                                                 className="w-full bg-black/80 border-b-2 border-red-900/50 px-10 py-5 focus:outline-none focus:border-red-500 focus:bg-red-900/10 transition-all text-white placeholder:text-zinc-700 font-cinzel text-lg tracking-widest rounded-t-lg"
                                             />
@@ -313,7 +331,7 @@ export default function RegistrationPage({ params }: PageProps) {
 
                                     {/* Email ID */}
                                     <div className="space-y-4">
-                                        <label className="text-red-500 font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase font-bold flex items-center gap-2">
+                                        <label htmlFor="email" className="text-red-500 font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase font-bold flex items-center gap-2">
                                             <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse" />
                                             Team Leader Email
                                         </label>
@@ -323,8 +341,10 @@ export default function RegistrationPage({ params }: PageProps) {
                                             </div>
                                             <input
                                                 required
+                                                id="email"
                                                 name="email"
                                                 type="email"
+                                                autoComplete="email"
                                                 placeholder="base@command.com"
                                                 className="w-full bg-black/80 border-b-2 border-red-900/50 px-10 py-5 focus:outline-none focus:border-red-500 focus:bg-red-900/10 transition-all text-white placeholder:text-zinc-700 font-cinzel text-lg tracking-widest rounded-t-lg"
                                             />
@@ -358,7 +378,7 @@ export default function RegistrationPage({ params }: PageProps) {
                                         <div className="flex-1 space-y-8 flex flex-col justify-center">
                                             <div className="space-y-3">
                                                 <div className="flex items-center justify-between">
-                                                    <label className="text-red-500 font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase font-bold flex items-center gap-2">
+                                                    <label htmlFor="receipt" className="text-red-500 font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase font-bold flex items-center gap-2">
                                                         <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse" />
                                                         Upload Payment Receipt
                                                     </label>

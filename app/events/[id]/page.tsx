@@ -55,7 +55,7 @@ export default function EventPage({ params }: PageProps) {
             <nav className="relative z-50 w-full p-6 flex items-center justify-between">
                 <Link href="/" className="group flex items-center gap-2 text-gray-400 hover:text-red-500 transition-colors">
                     <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                    <span className="font-mono text-sm uppercase tracking-widest">Back to Home</span>
+                    <span className="font-mono text-sm uppercase tracking-widest">Back to Upside Down</span>
                 </Link>
                 <div className="hidden md:flex items-center gap-2">
                     <span className="w-16 h-px bg-red-600/50" />
@@ -171,22 +171,33 @@ export default function EventPage({ params }: PageProps) {
                         <div className="p-6 md:p-8 bg-black/90 border border-red-900/50 rounded-xl shadow-[inset_0_0_20px_rgba(220,38,38,0.05)]">
                             <p className="text-red-400 font-mono text-sm tracking-widest uppercase mb-5 drop-shadow-md">Protocol Directives:</p>
                             <ul className="space-y-4 font-medium text-lg font-sans text-gray-300">
-                                <li className="flex gap-4 items-start">
-                                    <span className="text-red-500 mt-1 font-black">❯</span>
-                                    <span className="leading-relaxed">Registration fee is non-refundable under any circumstances.</span>
-                                </li>
-                                <li className="flex gap-4 items-start">
-                                    <span className="text-red-500 mt-1 font-black">❯</span>
-                                    <span className="leading-relaxed">Ensure all team details entered are accurate. Coordinates will be sent to the Team Leader.</span>
-                                </li>
-                                <li className="flex gap-4 items-start">
-                                    <span className="text-red-500 mt-1 font-black">❯</span>
-                                    <span className="leading-relaxed">A valid payment receipt screenshot must be uploaded. False submissions will result in immediate disqualification.</span>
-                                </li>
-                                <li className="flex gap-4 items-start">
-                                    <span className="text-red-500 mt-1 font-black">❯</span>
-                                    <span className="leading-relaxed">Maximum team size must not exceed the specified limits.</span>
-                                </li>
+                                {event.rules ? (
+                                    event.rules.map((rule, idx) => (
+                                        <li key={idx} className="flex gap-4 items-start">
+                                            <span className="text-red-500 mt-1 font-black">❯</span>
+                                            <span className="leading-relaxed">{rule}</span>
+                                        </li>
+                                    ))
+                                ) : (
+                                    <>
+                                        <li className="flex gap-4 items-start">
+                                            <span className="text-red-500 mt-1 font-black">❯</span>
+                                            <span className="leading-relaxed">Registration fee is non-refundable under any circumstances.</span>
+                                        </li>
+                                        <li className="flex gap-4 items-start">
+                                            <span className="text-red-500 mt-1 font-black">❯</span>
+                                            <span className="leading-relaxed">Ensure all team details entered are accurate. Coordinates will be sent to the Team Leader.</span>
+                                        </li>
+                                        <li className="flex gap-4 items-start">
+                                            <span className="text-red-500 mt-1 font-black">❯</span>
+                                            <span className="leading-relaxed">A valid payment receipt screenshot must be uploaded. False submissions will result in immediate disqualification.</span>
+                                        </li>
+                                        <li className="flex gap-4 items-start">
+                                            <span className="text-red-500 mt-1 font-black">❯</span>
+                                            <span className="leading-relaxed">Maximum team size must not exceed the specified limits.</span>
+                                        </li>
+                                    </>
+                                )}
                             </ul>
                         </div>
                     </div>

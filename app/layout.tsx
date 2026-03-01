@@ -56,13 +56,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${asoka.variable} ${cinzel.variable} ${creepster.variable}`}>
+    <html lang="en" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${asoka.variable} ${cinzel.variable} ${creepster.variable}`} data-scroll-behavior="smooth">
       <body className="font-sans antialiased bg-black text-[#f0f0f0] overflow-x-hidden selection:bg-red-900 selection:text-white">
         <CustomCursor />
         <SmoothScroll>
           {children}
         </SmoothScroll>
       </body>
-    </html>
+    </html >
   )
 }

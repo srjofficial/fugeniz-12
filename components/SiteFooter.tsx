@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FaInstagram, FaArrowRight } from "react-icons/fa";
+import { FaInstagram, FaArrowRight, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
     return (
@@ -17,25 +17,46 @@ export default function Footer() {
             {/* Main Footer Content */}
             <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
                 {/* College and Community Sections */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
                     {/* SNGCE Section */}
-                    <div className="flex flex-col items-center md:items-start">
+                    <div className="flex flex-col items-center text-center">
                         <div className="flex items-center gap-3 mb-4">
                             <div className="h-10 md:h-12 rounded-lg overflow-hidden flex items-center justify-center hover:scale-105 transition-transform duration-300">
                                 <img src="/home/sngce-logo.jpg" alt="SNGCE Logo" className="h-full w-auto object-cover" onError={(e) => { e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/en/thumb/5/52/SNGCE_logo.png/220px-SNGCE_logo.png' }} />
                             </div>
                         </div>
-                        <p className="text-red-500 font-sans text-sm md:text-base tracking-wide mb-3">
+                        <p className="text-red-500 font-sans text-xs md:text-sm tracking-wide mb-3">
                             Sree Narayana Gurukulam College of Engineering
                         </p>
-                        <Link href="/" className="flex items-center gap-2 text-white/70 hover:text-red-500 transition-colors duration-300 group">
-                            <span className="font-mono text-xs tracking-wider uppercase">Explore Campus</span>
+                        <Link href="https://sngce.ac.in" className="flex items-center justify-center gap-2 text-white/70 hover:text-red-500 transition-colors duration-300 group">
+                            <span className="font-mono text-[10px] md:text-xs tracking-wider uppercase">Explore Campus</span>
                             <FaArrowRight className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </div>
 
+                    {/* sngce ieee sb */}
+                    <div className="flex flex-col items-center text-center">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="h-10 md:h-12 rounded-lg overflow-hidden flex items-center justify-center hover:scale-105 transition-transform duration-300">
+                                <img
+                                    src="/home/student-brach-white-26-02-26_15-39-21-904.png"
+                                    alt="SNGCE IEEE SB Logo"
+                                    className="h-full w-auto object-contain"
+                                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                                />
+                            </div>
+                        </div>
+                        <p className="text-red-500 font-sans text-xs md:text-sm tracking-wide mb-3">
+                            IEEE Student Branch SNGCE
+                        </p>
+                        {/* <Link href="/" className="flex items-center justify-center gap-2 text-white/70 hover:text-red-500 transition-colors duration-300 group">
+                            <span className="font-mono text-[10px] md:text-xs tracking-wider uppercase">Join Us</span>
+                            <FaArrowRight className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
+                        </Link> */}
+                    </div>
+
                     {/* IEEE CIS Section */}
-                    <div className="flex flex-col items-center md:items-start">
+                    <div className="flex flex-col items-center text-center">
                         <div className="flex items-center gap-3 mb-4">
                             <div className="h-10 md:h-12 rounded-lg overflow-hidden flex items-center justify-center hover:scale-105 transition-transform duration-300">
                                 <img
@@ -46,14 +67,36 @@ export default function Footer() {
                                 />
                             </div>
                         </div>
-                        <p className="text-red-500 font-sans text-sm md:text-base tracking-wide mb-3">
+                        <p className="text-red-500 font-sans text-xs md:text-sm tracking-wide mb-3">
                             Computational Intelligence Society
                         </p>
-                        <Link href="/" className="flex items-center gap-2 text-white/70 hover:text-red-500 transition-colors duration-300 group">
-                            <span className="font-mono text-xs tracking-wider uppercase">Discover Events</span>
+                        {/* <Link href="/" className="flex items-center justify-center gap-2 text-white/70 hover:text-red-500 transition-colors duration-300 group">
+                            <span className="font-mono text-[10px] md:text-xs tracking-wider uppercase">Discover Events</span>
+                            <FaArrowRight className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
+                        </Link> */}
+                    </div>
+
+                    {/* IEEE */}
+                    <div className="flex flex-col items-center text-center">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="h-10 md:h-12 rounded-lg overflow-hidden flex items-center justify-center hover:scale-105 transition-transform duration-300">
+                                <img
+                                    src="/home/ieee.png"
+                                    alt="IEEE Logo"
+                                    className="h-full w-auto object-contain"
+                                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                                />
+                            </div>
+                        </div>
+                        <p className="text-red-500 font-sans text-xs md:text-sm tracking-wide mb-3">
+                            IEEE
+                        </p>
+                        <Link href="https://www.ieee.org/" className="flex items-center justify-center gap-2 text-white/70 hover:text-red-500 transition-colors duration-300 group">
+                            <span className="font-mono text-[10px] md:text-xs tracking-wider uppercase">Learn More</span>
                             <FaArrowRight className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </div>
+
                 </div>
 
                 {/* Social & Banner Row */}
@@ -64,12 +107,22 @@ export default function Footer() {
                             Social
                         </h4>
                         <Link
-                            href="#"
+                            href="https://www.instagram.com/ieee_sngce_cis?igsh=MWVjMG95OW5zeTRybQ=="
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-white hover:text-red-500 transition-colors duration-300"
+                            className="flex items-center gap-3 text-gray-300 hover:text-red-500 transition-colors duration-300 group"
                         >
-                            <FaInstagram size={24} />
+                            <FaInstagram size={24} className="text-gray-500 group-hover:text-red-500 transition-colors" />
+                            <span className="font-cinzel tracking-wider text-sm font-bold">IEEE CIS</span>
+                        </Link>
+                        <Link
+                            href="https://www.linkedin.com/company/ieee-cis-sngce/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 text-gray-300 hover:text-red-500 transition-colors duration-300 group"
+                        >
+                            <FaLinkedin size={24} className="text-gray-500 group-hover:text-red-500 transition-colors" />
+                            <span className="font-cinzel tracking-wider text-sm font-bold">IEEE CIS</span>
                         </Link>
                     </div>
 
@@ -117,7 +170,7 @@ export default function Footer() {
                     <div className="flex flex-wrap justify-center gap-6 md:gap-12">
                         {/* Abinson Babu */}
                         <Link
-                            href="https://www.instagram.com/"
+                            href="https://www.instagram.com/ab._xn__son__"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-3 text-gray-300 hover:text-red-500 transition-colors duration-300 group"

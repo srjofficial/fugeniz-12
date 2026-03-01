@@ -42,7 +42,7 @@ export default function GlobalLoader() {
 
                     <div className="relative z-10 flex flex-col items-center">
                         {/* Stunning Logo Reveal */}
-                        <div className="relative w-[160px] h-[160px] md:w-[200px] md:h-[200px] mb-8">
+                        <div className="relative w-[150px] h-[150px] md:w-[180px] md:h-[180px] mb-8">
                             {/* Animated Red Aura Behind Logo */}
                             <motion.div
                                 animate={{
@@ -62,22 +62,14 @@ export default function GlobalLoader() {
                                 initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
                                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                                 transition={{ duration: 1.5, ease: "easeOut" }}
-                                className="relative w-full h-full z-10 overflow-hidden rounded-full ring-2 ring-red-600/60 ring-offset-2 ring-offset-black"
+                                className="relative w-full h-full z-10"
                             >
                                 <Image
-                                    src="/home/f12-logo.png"
+                                    src="/home/cis.png"
                                     alt="FUGENIZ 12th Loading"
                                     fill
-                                    className="object-cover drop-shadow-[0_0_15px_rgba(255,0,0,0.6)]"
+                                    className="object-contain drop-shadow-[0_0_15px_rgba(255,0,0,0.6)]"
                                     priority
-                                />
-
-                                {/* Sweeping Light Glint Effect */}
-                                <motion.div
-                                    initial={{ x: "-150%" }}
-                                    animate={{ x: "250%" }}
-                                    transition={{ duration: 3, repeat: Infinity, repeatDelay: 0.5, ease: "easeInOut" }}
-                                    className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] mix-blend-overlay pointer-events-none"
                                 />
                             </motion.div>
                         </div>

@@ -57,7 +57,7 @@ export default function TenaniScrollAnimation() {
     const getVariant = (): Variant =>
         window.innerWidth < MOBILE_BREAKPOINT ? "mobile" : "desktop";
 
-    // ─── Draw a frame to the canvas ──────────────────────────────────────────
+    // ─── Draw a frame to the canvas (cover-fit: fills canvas, crops edges) ─────
     const drawFrame = useCallback((index: number) => {
         const canvas = canvasRef.current;
         const img = imagesRef.current[index];
@@ -68,12 +68,21 @@ export default function TenaniScrollAnimation() {
 
         const cw = canvas.width, ch = canvas.height;
         const iw = img.naturalWidth, ih = img.naturalHeight;
-        const scale = Math.min(cw / iw, ch / ih);
+
+        // cover: scale so the image fills the canvas; the excess is cropped
+        const scale = Math.max(cw / iw, ch / ih);
         const drawW = iw * scale, drawH = ih * scale;
-        const dx = (cw - drawW) / 2, dy = (ch - drawH) / 2;
+        // centre the crop
+        const sx = (drawW - cw) / 2, sy = (drawH - ch) / 2;
 
         ctx.clearRect(0, 0, cw, ch);
-        ctx.drawImage(img, dx, dy, drawW, drawH);
+        // drawImage(img, srcX, srcY, srcW, srcH, dstX, dstY, dstW, dstH)
+        ctx.drawImage(
+            img,
+            sx / scale, sy / scale,       // source crop origin
+            cw / scale, ch / scale,       // source crop size
+            0, 0, cw, ch                  // fill the whole canvas
+        );
     }, []);
 
     // ─── Resize canvas to match container ────────────────────────────────────
@@ -81,8 +90,9 @@ export default function TenaniScrollAnimation() {
         const canvas = canvasRef.current;
         const section = sectionRef.current;
         if (!canvas || !section) return;
-        canvas.width = section.clientWidth;
-        canvas.height = section.clientHeight;
+        // Use offsetWidth/Height to get the true rendered size incl. any dvh scaling
+        canvas.width = section.offsetWidth || section.clientWidth;
+        canvas.height = section.offsetHeight || section.clientHeight;
         drawFrame(currentFrameRef.current);
     }, [drawFrame]);
 
@@ -165,12 +175,22 @@ export default function TenaniScrollAnimation() {
                         currentFrameRef.current = frame;
                         drawFrame(frame);
 
-                        // Hero overlay: fade in at 80-100% progress
-                        if (overlay) {
-                            const opacity = Math.max(0, (self.progress - 0.80) * 5);
-                            overlay.style.opacity = String(opacity);
-                            overlay.style.transform =
-                                `translateY(${Math.max(0, (1 - opacity) * 40)}px)`;
+                        // The overlay and header now just naturally stay visible.
+                        // We removed the opacity fade-in since the user wants it visible from the start.
+
+                        // Fade out top header right as March 5 begins to naturally exit the viewport 
+                        // The section scrolls into Events showcase immediately after 100% progress
+                        const header = document.getElementById("ieee-cis-header");
+                        if (header) {
+                            if (self.progress > 0.95) {
+                                // fade out VERY late, right as the entire section is leaving the screen
+                                const headerOpacity = Math.max(0, 1 - ((self.progress - 0.95) * 20));
+                                header.style.opacity = String(headerOpacity);
+                                header.style.pointerEvents = headerOpacity === 0 ? "none" : "auto";
+                            } else {
+                                header.style.opacity = "1";
+                                header.style.pointerEvents = "auto";
+                            }
                         }
 
                         // Progress bar
@@ -206,10 +226,18 @@ export default function TenaniScrollAnimation() {
         });
         ro.observe(section);
 
+        // Also listen for orientation / window resize so canvas stays accurate
+        const onResize = () => {
+            sizeCanvas();
+            ScrollTrigger.refresh();
+        };
+        window.addEventListener("resize", onResize, { passive: true });
+
         cleanupRef.current = () => {
             tween.kill();
             ScrollTrigger.getAll().forEach((t) => t.kill());
             ro.disconnect();
+            window.removeEventListener("resize", onResize);
         };
     }, [drawFrame, sizeCanvas, preloadChunk]);
 
@@ -228,7 +256,7 @@ export default function TenaniScrollAnimation() {
             ref={sectionRef}
             id="home"
             className="relative w-full bg-black overflow-hidden"
-            style={{ height: "100vh" }}
+            style={{ height: "100dvh" }}
         >
             {/* ── Fixed last-frame background (persists behind rest of page) ── */}
             <div
@@ -305,9 +333,9 @@ export default function TenaniScrollAnimation() {
             `}</style>
 
             {/* ── Presented By — ALWAYS VISIBLE from frame 0 ──────────────── */}
-            <div className="absolute top-0 left-0 right-0 z-20 flex flex-col items-center justify-center gap-2 px-4 pt-8 mt-[50px] md:mt-0">
-                {/* SNGCE Logo */}
-                {/* <div className="flex-shrink-0">
+            {/* <div className="absolute top-0 left-0 right-0 z-20 flex flex-col items-center justify-center gap-2 px-4 pt-6 sm:pt-8 mt-[72px] sm:mt-[56px] md:mt-4 lg:mt-0"> */}
+            {/* SNGCE Logo */}
+            {/* <div className="flex-shrink-0">
                     <img
                         src="/home/sngce-logo.jpg"
                         alt="SNGCE Logo"
@@ -318,37 +346,49 @@ export default function TenaniScrollAnimation() {
                     />
                 </div> */}
 
-                {/* Animated College Name Text */}
-                <div className="flex flex-col items-center leading-tight">
-                    <span className="college-text-line font-cinzel font-bold text-white text-lg sm:text-xl md:text-2xl uppercase tracking-[0.2em] drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
+            {/* Animated College Name Text */}
+            {/* <div className="flex flex-col items-center text-center leading-tight">
+                    <span className="college-text-line font-cinzel font-bold text-white text-sm sm:text-xl md:text-2xl uppercase tracking-[0.1em] sm:tracking-[0.2em] drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
                         Sree Narayana Gurukulam
                     </span>
-                    <span className="college-text-line font-cinzel font-bold text-red-400 text-lg sm:text-xl md:text-2xl uppercase tracking-[0.2em] drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
+                    <span className="college-text-line font-cinzel font-bold text-red-400 text-sm sm:text-xl md:text-2xl uppercase tracking-[0.1em] sm:tracking-[0.2em] drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
                         College of Engineering
                     </span>
-                </div>
+                </div> */}
 
-                {/* IEEE CIS Logo */}
-                <div className="flex-shrink-0">
-                    <img
-                        src="/home/cis.png"
-                        alt="IEEE CIS Logo"
-                        className="h-[28px] sm:h-[36px] md:h-[44px] w-auto object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
-                        onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).style.display = "none";
-                        }}
-                    />
-                </div>
-            </div>
+            {/* IEEE CIS Logo */}
+            {/* <div className="flex-shrink-0">
+                    <div className="flex flex-col items-center text-center leading-tight">
+                        <span className="college-text-line font-cinzel font-bold text-white text-xs sm:text-base md:text-xl uppercase tracking-[0.1em] sm:tracking-[0.2em] drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
+                            in association with
+                        </span>
+                        <span className="college-text-line font-cinzel font-bold text-red-400 text-sm sm:text-xl md:text-2xl uppercase tracking-[0.1em] sm:tracking-[0.2em] drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
+                            IEEE cis student branch
+                        </span>
+                    </div>
+                </div> */}
+            {/* </div> */}
 
-            {/* ── End-reveal overlay: MARCH 5 + Explore Now (fades in at 80%) ── */}
+            {/* ── End-reveal overlay: MARCH 5 + Explore Now (always visible) ── */}
             <div
                 ref={overlayRef}
                 className="absolute inset-0 z-20 pointer-events-none"
-                style={{ opacity: 0, willChange: "opacity" }}
+                style={{ opacity: 1, willChange: "opacity" }}
             >
                 {/* Bottom-center: MARCH 5 (glitch) + Explore Now */}
                 <div className="absolute bottom-10 left-0 right-0 flex flex-col items-center gap-4 pointer-events-auto">
+
+                    {/* IEEE CIS Glitch Title */}
+                    <div
+                        className="glitch-date font-cinzel font-black text-sm sm:text-lg md:text-xl xl:text-3xl tracking-[0.2em] sm:tracking-[0.3em] uppercase select-none text-center"
+                        data-text="IEEE CIS STUDENT BRANCH CHAPTER"
+                        style={{
+                            color: "#BF092F",
+                            textShadow: "1px 1px 3px rgba(0,0,0,1), 2px 2px 6px rgba(0,0,0,0.8)",
+                        }}
+                    >
+                        IEEE CIS STUDENT BRANCH CHAPTER
+                    </div>
 
                     {/* MARCH 5 — glitch date */}
                     <div
