@@ -27,29 +27,33 @@ const VARIANTS = {
     desktop: {
         totalFrames: 192,
         framePath: (i: number) =>
-            `/frames/tenani/frame-${String(i).padStart(4, "0")}.jpg`,
+            `/frames/tenani-webp/frame-${String(i).padStart(4, "0")}.webp`,
         pxPerFrame: 20,
     },
     mobile: {
         totalFrames: 192,
         framePath: (i: number) =>
-            `/frames/tenani-mobile/frame-${String(i).padStart(4, "0")}.jpg`,
+            `/frames/tenani-mobile-webp/frame-${String(i).padStart(4, "0")}.webp`,
         pxPerFrame: 20,
     },
 } as const;
 
 type Variant = keyof typeof VARIANTS;
 
-const CHUNK_SIZE = 16;
+const CHUNK_SIZE = 48;
+const EAGER_FRAMES = 40; // preload these immediately, before idle chunking
 
 export default function TenaniScrollAnimation() {
     const sectionRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
     const lastFrameBgRef = useRef<HTMLDivElement>(null);
+    const bufferBarRef = useRef<HTMLDivElement>(null);
+    const bufferOverlayRef = useRef<HTMLDivElement>(null);
     const imagesRef = useRef<HTMLImageElement[]>([]);
     const currentFrameRef = useRef(0);
     const loadedCountRef = useRef(0);
+    const bufferReadyRef = useRef(false);
     const variantRef = useRef<Variant>("desktop");
     const cleanupRef = useRef<(() => void) | null>(null);
 
@@ -96,7 +100,24 @@ export default function TenaniScrollAnimation() {
         drawFrame(currentFrameRef.current);
     }, [drawFrame]);
 
-    // ─── Preload frames in idle chunks ───────────────────────────────────────
+    // ─── Update buffer overlay based on how many frames are ready ───────────
+    const updateBufferUI = useCallback((loaded: number) => {
+        if (bufferReadyRef.current) return;
+        const pct = Math.min(loaded / EAGER_FRAMES, 1);
+        if (bufferBarRef.current) {
+            bufferBarRef.current.style.width = `${pct * 100}%`;
+        }
+        if (pct >= 1 && bufferOverlayRef.current) {
+            bufferReadyRef.current = true;
+            bufferOverlayRef.current.style.transition = "opacity 0.5s ease";
+            bufferOverlayRef.current.style.opacity = "0";
+            setTimeout(() => {
+                if (bufferOverlayRef.current) bufferOverlayRef.current.style.display = "none";
+            }, 550);
+        }
+    }, []);
+
+    // ─── Preload first N frames eagerly, then continue in chunks ─────────────
     const preloadChunk = useCallback((
         startIndex: number,
         framePath: (i: number) => string,
@@ -110,20 +131,35 @@ export default function TenaniScrollAnimation() {
             img.onload = () => {
                 loadedCountRef.current += 1;
                 if (i === 0) drawFrame(0);
+                updateBufferUI(loadedCountRef.current);
             };
             imagesRef.current[i] = img;
         }
         if (end < totalFrames) {
-            if (typeof requestIdleCallback !== "undefined") {
-                requestIdleCallback(() => preloadChunk(end, framePath, totalFrames));
-            } else {
-                setTimeout(() => preloadChunk(end, framePath, totalFrames), 16);
-            }
+            // Use setTimeout(0) instead of requestIdleCallback for faster loading
+            setTimeout(() => preloadChunk(end, framePath, totalFrames), 0);
         }
-    }, [drawFrame]);
+    }, [drawFrame, updateBufferUI]);
+
+    // ─── Eagerly preload the first EAGER_FRAMES in parallel ──────────────────
+    const eagerPreload = useCallback((
+        framePath: (i: number) => string,
+    ) => {
+        for (let i = 0; i < EAGER_FRAMES; i++) {
+            if (imagesRef.current[i]) continue;
+            const img = new window.Image();
+            img.src = framePath(i + 1);
+            img.onload = () => {
+                loadedCountRef.current += 1;
+                if (i === 0) drawFrame(0);
+                updateBufferUI(loadedCountRef.current);
+            };
+            imagesRef.current[i] = img;
+        }
+    }, [drawFrame, updateBufferUI]);
 
     // ─── Bootstrap GSAP ScrollTrigger for the active variant ─────────────────
-    const initAnimation = useCallback(() => {
+    const initAnimation = useCallback(() => { // eslint-disable-line react-hooks/exhaustive-deps
         // Clean up previous instance
         if (cleanupRef.current) {
             cleanupRef.current();
@@ -144,6 +180,12 @@ export default function TenaniScrollAnimation() {
         imagesRef.current = [];
         loadedCountRef.current = 0;
         currentFrameRef.current = 0;
+        bufferReadyRef.current = false;
+        if (bufferOverlayRef.current) {
+            bufferOverlayRef.current.style.display = "flex";
+            bufferOverlayRef.current.style.opacity = "1";
+        }
+        if (bufferBarRef.current) bufferBarRef.current.style.width = "0%";
 
         // Update fixed background to correct last frame
         if (lastFrameBg) {
@@ -153,7 +195,10 @@ export default function TenaniScrollAnimation() {
         }
 
         sizeCanvas();
-        preloadChunk(0, framePath, totalFrames);
+        // 1) Eagerly load first 40 frames in parallel so animation starts fast
+        eagerPreload(framePath);
+        // 2) Continue loading remaining frames in background chunks
+        setTimeout(() => preloadChunk(EAGER_FRAMES, framePath, totalFrames), 0);
 
         const totalScrollPx = pxPerFrame * (totalFrames - 1);
 
@@ -239,7 +284,7 @@ export default function TenaniScrollAnimation() {
             ro.disconnect();
             window.removeEventListener("resize", onResize);
         };
-    }, [drawFrame, sizeCanvas, preloadChunk]);
+    }, [drawFrame, sizeCanvas, preloadChunk, eagerPreload]);
 
     useEffect(() => {
         if (typeof window === "undefined") return;
@@ -267,12 +312,46 @@ export default function TenaniScrollAnimation() {
                     inset: 0,
                     zIndex: -1,
                     opacity: 0,
-                    backgroundImage: `url('/frames/tenani/frame-${String(192).padStart(4, "0")}.jpg')`,
+                    backgroundImage: `url('/frames/tenani-webp/frame-${String(192).padStart(4, "0")}.webp')`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     willChange: "opacity",
                 }}
             />
+
+            {/* ── Buffer overlay: shown until first 40 frames are ready ─── */}
+            <div
+                ref={bufferOverlayRef}
+                aria-hidden="true"
+                style={{
+                    position: "absolute",
+                    inset: 0,
+                    zIndex: 50,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: "rgba(0,0,0,0.85)",
+                    gap: "12px",
+                    pointerEvents: "none",
+                }}
+            >
+                <span style={{ color: "#ef4444", fontFamily: "monospace", fontSize: "11px", letterSpacing: "0.3em", textTransform: "uppercase" }}>
+                    Loading animation…
+                </span>
+                <div style={{ width: "180px", height: "2px", background: "rgba(255,255,255,0.1)", borderRadius: "2px", overflow: "hidden" }}>
+                    <div
+                        ref={bufferBarRef}
+                        style={{
+                            height: "100%",
+                            width: "0%",
+                            background: "linear-gradient(to right, #dc2626, #f97316)",
+                            transition: "width 0.2s ease",
+                            boxShadow: "0 0 8px rgba(255,0,0,0.7)",
+                        }}
+                    />
+                </div>
+            </div>
 
             {/* ── Canvas: frame renderer ──────────────────────────────────── */}
             <canvas
