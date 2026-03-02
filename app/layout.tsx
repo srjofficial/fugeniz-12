@@ -34,7 +34,7 @@ const asoka = localFont({
 })
 
 export const metadata: Metadata = {
-  title: "Stranger Things Tech Fest | SNGCE IEEE CIS",
+  title: "Fugeniz_cis | SNGCE IEEE CIS",
   description:
     "Annual Tech Fest - Sree Narayana Gurukulam College of Engineering under IEEE Computational Intelligence Society.",
 
