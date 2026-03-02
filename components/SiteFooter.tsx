@@ -28,8 +28,12 @@ export default function Footer() {
                         <p className="text-red-500 font-sans text-xs md:text-sm tracking-wide mb-3">
                             Sree Narayana Gurukulam College of Engineering
                         </p>
-                        <Link href="https://sngce.ac.in" className="flex items-center justify-center gap-2 text-white/70 hover:text-red-500 transition-colors duration-300 group">
-                            <span className="font-mono text-[10px] md:text-xs tracking-wider uppercase">Explore Campus</span>
+                        <Link href="https://sngce.ac.in" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-white/70 hover:text-red-500 transition-colors duration-300 group">
+                            <span className="font-mono text-[10px] md:text-xs tracking-wider uppercase">college website</span>
+                            <FaArrowRight className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                        <Link href="https://maps.app.goo.gl/m4xtMMW9pvMbB9QUA" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-white/70 hover:text-red-500 transition-colors duration-300 group">
+                            <span className="font-mono text-[10px] md:text-xs tracking-wider uppercase">college location</span>
                             <FaArrowRight className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </div>
@@ -91,7 +95,7 @@ export default function Footer() {
                         <p className="text-red-500 font-sans text-xs md:text-sm tracking-wide mb-3">
                             IEEE
                         </p>
-                        <Link href="https://www.ieee.org/" className="flex items-center justify-center gap-2 text-white/70 hover:text-red-500 transition-colors duration-300 group">
+                        <Link href="https://www.ieee.org/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-white/70 hover:text-red-500 transition-colors duration-300 group">
                             <span className="font-mono text-[10px] md:text-xs tracking-wider uppercase">Learn More</span>
                             <FaArrowRight className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
                         </Link>
