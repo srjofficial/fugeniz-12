@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaInstagram, FaArrowRight, FaLinkedin } from "react-icons/fa";
+import { IoLocationSharp } from "react-icons/io5";
 
 export default function Footer() {
     return (
@@ -25,14 +26,11 @@ export default function Footer() {
                                 <img src="/home/sngce-logo.jpg" alt="SNGCE Logo" className="h-full w-auto object-cover" onError={(e) => { e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/en/thumb/5/52/SNGCE_logo.png/220px-SNGCE_logo.png' }} />
                             </div>
                         </div>
-                        <p className="text-red-500 font-sans text-xs md:text-sm tracking-wide mb-3">
+                        <Link href="https://sngce.ac.in" target="_blank" rel="noopener noreferrer" className="text-red-500 font-sans text-xs md:text-sm tracking-wide mb-3 hover:text-red-400 transition-colors duration-300">
                             Sree Narayana Gurukulam College of Engineering
-                        </p>
-                        <Link href="https://sngce.ac.in" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-white/70 hover:text-red-500 transition-colors duration-300 group">
-                            <span className="font-mono text-[10px] md:text-xs tracking-wider uppercase">college website</span>
-                            <FaArrowRight className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
                         </Link>
                         <Link href="https://maps.app.goo.gl/m4xtMMW9pvMbB9QUA" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-white/70 hover:text-red-500 transition-colors duration-300 group">
+                            <IoLocationSharp className="w-3 h-3" />
                             <span className="font-mono text-[10px] md:text-xs tracking-wider uppercase">college location</span>
                             <FaArrowRight className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
                         </Link>
