@@ -13,6 +13,7 @@ export type EventData = {
     venue?: string;
     registrationFee?: string;
     feeLabel?: string;
+    prizePool?: string;
     rules?: ReactNode[]; // Added optional rules array
 };
 
@@ -26,6 +27,7 @@ export const eventsData: Record<string, EventData> = {
         icon: <QrCode className="w-8 h-8 text-red-500" />,
         date: "March 5, 2026",
         registrationFee: "80",
+        prizePool: "3500",
         rules: [
             <span key="1"><strong>Team Structure:</strong> 2-3 members per team.</span>,
             <span key="2"><strong>Equipment:</strong> Each team will be provided with one dedicated mobile device.</span>,
@@ -43,8 +45,10 @@ export const eventsData: Record<string, EventData> = {
         icon: <BrainCircuit className="w-8 h-8 text-red-500" />,
         date: "March 5, 2026",
         registrationFee: "50",
+        prizePool: "2500",
         rules: [
-            <span key="1"><strong>The Challenge:</strong> Participants are given a target image or a complex theme (e.g., "SNGCE Campus in the year 2050").</span>,
+            <span key="0"><strong>Team Size:</strong> This event requires a team of exactly 2 members.</span>,
+            <span key="1"><strong>The Challenge:</strong> Participants are given a target image or a complex theme.</span>,
             <span key="2"><strong>Prompt Engineering:</strong> You must write a precise text prompt to get the AI to generate the most accurate or creative output.</span>,
             <span key="3">
                 <strong>Constraints:</strong><br />

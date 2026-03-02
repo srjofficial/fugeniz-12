@@ -212,6 +212,14 @@ export default function EventPage({ params }: PageProps) {
                         {/* Fee and Action Section - Image Style Match */}
                         <div className="flex flex-col items-center sm:items-start gap-8 w-full">
                             <div className="flex flex-col items-center sm:items-start gap-2">
+                                {event.prizePool && (
+                                    <div className="flex flex-col items-center sm:items-start gap-1 mb-4 pb-4 border-b border-yellow-500/20 w-full">
+                                        <span className="text-yellow-600/80 font-mono text-xs md:text-sm uppercase tracking-[0.3em] font-bold">💰 Prize Pool</span>
+                                        <div className="text-yellow-400 font-sans text-4xl md:text-6xl font-black tracking-tight drop-shadow-[0_0_15px_rgba(234,179,8,0.4)]">
+                                            ₹{event.prizePool}
+                                        </div>
+                                    </div>
+                                )}
                                 <span className="text-zinc-500 font-mono text-xs md:text-sm uppercase tracking-[0.3em] font-bold">Registration Fee</span>
                                 <div className="text-white font-sans text-4xl md:text-6xl font-black tracking-tight">
                                     ₹{event.registrationFee || "150"} {event.feeLabel && <span className="text-2xl md:text-3xl font-bold text-zinc-400">{event.feeLabel}</span>}

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Upload, CheckCircle2, QrCode, CreditCard, Send } from "lucide-react";
+import { ArrowLeft, Upload, CheckCircle2, QrCode, CreditCard, Send, Download } from "lucide-react";
 import { eventsData } from "@/lib/stranger-events-data";
 import SiteFooter from "@/components/SiteFooter";
 import FloatingSpores from "@/components/FloatingSpores";
@@ -24,6 +24,7 @@ export default function RegistrationPage({ params }: PageProps) {
     const [submittingState, setSubmittingState] = useState<string | null>(null);
     const [isSuccess, setIsSuccess] = useState(false);
     const [fileName, setFileName] = useState<string | null>(null);
+    const [qrFullscreen, setQrFullscreen] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     if (!event) {
@@ -172,6 +173,8 @@ export default function RegistrationPage({ params }: PageProps) {
         }
     };
 
+    const QR_DOWNLOAD_URL = "/api/download-qr";
+
     // 3D Text Style
     const text3DStyle = {
         textShadow: "2px 2px 0px rgba(153, 27, 27, 0.8), 4px 4px 0px rgba(0, 0, 0, 0.5)"
@@ -258,31 +261,32 @@ export default function RegistrationPage({ params }: PageProps) {
 
                                     {/* Number of Members */}
                                     <div className="space-y-2 group">
-                                        <label htmlFor="teamSize" className="block font-mono text-xs uppercase tracking-widest text-gray-500 group-focus-within:text-red-500 transition-colors" style={text3DStyle}>
+                                        <label className="block font-mono text-xs uppercase tracking-widest text-gray-500 transition-colors" style={text3DStyle}>
                                             {eventId === "scan-seek"
                                                 ? "Number of Team Members (2–3)"
-                                                : "Number of Team Members (1–2)"}
+                                                : "Team Size"}
                                         </label>
-                                        <select
-                                            required
-                                            id="teamSize"
-                                            name="teamSize"
-                                            autoComplete="off"
-                                            className="w-full bg-black/50 border border-zinc-800 rounded-lg px-4 py-4 focus:outline-none focus:border-red-600 transition-all text-white appearance-none shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)]"
-                                        >
-                                            <option value="">Select count</option>
-                                            {eventId === "scan-seek" ? (
-                                                <>
-                                                    <option value="2">2 Members</option>
-                                                    <option value="3">3 Members</option>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <option value="1">1 (Solo)</option>
-                                                    <option value="2">2 Members</option>
-                                                </>
-                                            )}
-                                        </select>
+                                        {eventId === "scan-seek" ? (
+                                            <select
+                                                required
+                                                id="teamSize"
+                                                name="teamSize"
+                                                autoComplete="off"
+                                                className="w-full bg-black/50 border border-zinc-800 rounded-lg px-4 py-4 focus:outline-none focus:border-red-600 transition-all text-white appearance-none shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)]"
+                                            >
+                                                <option value="">Select count</option>
+                                                <option value="2">2 Members</option>
+                                                <option value="3">3 Members</option>
+                                            </select>
+                                        ) : (
+                                            <>
+                                                <input type="hidden" name="teamSize" value="2" />
+                                                <div className="w-full bg-black/50 border border-zinc-800 rounded-lg px-4 py-4 flex items-center gap-3 text-white">
+                                                    <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse shrink-0" />
+                                                    <span className="font-mono text-sm tracking-wider">This event requires a team of exactly <span className="text-red-400 font-bold">2 members</span></span>
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
 
                                     {/* Row 3: College */}
@@ -361,10 +365,11 @@ export default function RegistrationPage({ params }: PageProps) {
 
                                     <div className="flex flex-col md:flex-row gap-12">
                                         <div className="relative group/qr shrink-0">
-                                            <div className="absolute -inset-4 bg-red-600/5 rounded-2xl group-hover/qr:bg-red-600/10 transition-colors" />
+                                            <div className="absolute -inset-4 bg-red-600/5 rounded-2xl group-hover/qr:bg-red-600/10 transition-colors pointer-events-none" />
                                             <motion.div
                                                 whileHover={{ y: -5 }}
-                                                className="relative w-64 h-64 overflow-hidden rounded-xl border border-red-900/50 bg-black/80 p-2 shadow-2xl"
+                                                onClick={() => setQrFullscreen(true)}
+                                                className="relative w-80 h-80 overflow-hidden rounded-xl border border-red-900/50 bg-black/80 p-2 shadow-2xl cursor-zoom-in"
                                             >
                                                 <Image
                                                     src="/home/upi-qr.jpg"
@@ -373,6 +378,15 @@ export default function RegistrationPage({ params }: PageProps) {
                                                     className="object-contain p-2"
                                                 />
                                             </motion.div>
+                                            {/* Download Button */}
+                                            <button
+                                                type="button"
+                                                onClick={() => { window.location.href = QR_DOWNLOAD_URL; }}
+                                                className="relative z-10 mt-3 flex items-center justify-center gap-2 w-full py-2.5 rounded-lg border border-red-900/40 bg-black/60 text-gray-400 hover:text-white hover:border-red-500 hover:bg-red-900/20 transition-all duration-300 font-mono text-xs uppercase tracking-widest group/dl"
+                                            >
+                                                <Download className="w-3.5 h-3.5 group-hover/dl:-translate-y-0.5 group-hover/dl:translate-x-0.5 transition-transform" />
+                                                Download QR
+                                            </button>
                                         </div>
 
                                         <div className="flex-1 space-y-8 flex flex-col justify-center">
@@ -425,7 +439,7 @@ export default function RegistrationPage({ params }: PageProps) {
                                         disabled={submittingState !== null}
                                         whileHover={{ y: -4, scale: 1.01 }}
                                         whileTap={{ y: 4, scale: 0.98 }}
-                                        className="w-full relative py-6 bg-red-600 text-white font-cinzel font-bold text-2xl tracking-[0.4em] uppercase overflow-hidden rounded-xl shadow-[0_8px_0_rgb(153,27,27),0_15px_20px_rgba(0,0,0,0.4)] transition-all duration-100 disabled:opacity-50 disabled:cursor-not-allowed group"
+                                        className="w-full relative py-6 bg-red-600 text-white font-cinzel font-bold text-lg md:text-2xl tracking-[0.2em] md:tracking-[0.4em] uppercase overflow-hidden rounded-xl shadow-[0_8px_0_rgb(153,27,27),0_15px_20px_rgba(0,0,0,0.4)] transition-all duration-100 disabled:opacity-50 disabled:cursor-not-allowed group"
                                     >
                                         <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0" />
                                         <span className="relative z-10 flex items-center justify-center gap-6" style={text3DStyle}>
@@ -479,21 +493,9 @@ export default function RegistrationPage({ params }: PageProps) {
                                 </div>
                             </motion.div>
 
-                            <motion.div
-                                animate={{
-                                    textShadow: [
-                                        "0px 0px 10px rgba(255,0,0,0.8), 4px 4px 0px rgba(153, 27, 27, 1)",
-                                        "0px 0px 30px rgba(255,0,0,1), 8px 8px 0px rgba(153, 27, 27, 1)",
-                                        "0px 0px 10px rgba(255,0,0,0.8), 4px 4px 0px rgba(153, 27, 27, 1)"
-                                    ],
-                                    scale: [1, 1.05, 1],
-                                    y: [0, -10, 0]
-                                }}
-                                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                                className="font-cinzel text-5xl md:text-7xl lg:text-8xl text-red-600 font-bold mb-16 tracking-widest uppercase cursor-default select-none"
-                            >
+                            <div className="font-cinzel text-5xl md:text-7xl lg:text-8xl text-red-600 font-bold mb-16 tracking-widest uppercase cursor-default select-none">
                                 ENTRY CONFIRMED
-                            </motion.div>
+                            </div>
 
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
@@ -510,6 +512,117 @@ export default function RegistrationPage({ params }: PageProps) {
                     )}
                 </AnimatePresence>
             </div>
+
+            {/* QR Fullscreen Lightbox */}
+            <AnimatePresence>
+                {qrFullscreen && (
+                    <motion.div
+                        key="qr-lightbox"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setQrFullscreen(false)}
+                        className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm flex items-center justify-center p-6 cursor-zoom-out"
+                    >
+                        {/* Close button */}
+                        <button
+                            onClick={() => setQrFullscreen(false)}
+                            className="absolute top-6 right-6 text-white/60 hover:text-white text-4xl font-thin leading-none transition-colors"
+                        >
+                            ✕
+                        </button>
+                        {/* QR Image */}
+                        <motion.div
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.8, opacity: 0 }}
+                            transition={{ type: "spring", damping: 20, stiffness: 200 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="relative w-[90vmin] h-[90vmin] max-w-lg max-h-lg bg-white rounded-2xl overflow-hidden shadow-[0_0_80px_rgba(220,38,38,0.3)] cursor-default"
+                        >
+                            <Image
+                                src="/home/upi-qr.jpg"
+                                alt="Payment QR Fullscreen"
+                                fill
+                                className="object-contain p-4"
+                                priority
+                            />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Verification Processing Popup */}
+            <AnimatePresence>
+                {submittingState !== null && (
+                    <motion.div
+                        key="verification-popup"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[9998] bg-black/95 backdrop-blur-md flex items-center justify-center p-6"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.85, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.85, opacity: 0 }}
+                            transition={{ type: "spring", damping: 20, stiffness: 200 }}
+                            className="flex flex-col items-center gap-8 text-center max-w-sm"
+                        >
+                            {/* Animated Buffering Ring */}
+                            <div className="relative w-28 h-28">
+                                {/* Outer glow ring */}
+                                <motion.div
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                    className="absolute inset-0 rounded-full border-4 border-transparent border-t-red-500 border-r-red-500/30"
+                                />
+                                {/* Middle ring */}
+                                <motion.div
+                                    animate={{ rotate: -360 }}
+                                    transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                                    className="absolute inset-3 rounded-full border-4 border-transparent border-t-orange-400 border-r-orange-400/20"
+                                />
+                                {/* Inner pulsing dot */}
+                                <motion.div
+                                    animate={{ scale: [1, 1.3, 1], opacity: [0.6, 1, 0.6] }}
+                                    transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+                                    className="absolute inset-0 flex items-center justify-center"
+                                >
+                                    <div className="w-4 h-4 rounded-full bg-red-500 shadow-[0_0_15px_rgba(239,68,68,1)]" />
+                                </motion.div>
+                            </div>
+
+                            {/* Status Text */}
+                            <div className="space-y-2">
+                                <motion.p
+                                    key={submittingState}
+                                    initial={{ opacity: 0, y: 8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="font-cinzel text-xl md:text-2xl text-white font-bold tracking-widest uppercase"
+                                >
+                                    {submittingState}
+                                </motion.p>
+                                <p className="font-mono text-xs text-gray-500 tracking-wider uppercase">
+                                    Processing your registration...
+                                </p>
+                            </div>
+
+                            {/* Warning */}
+                            <div className="flex items-center gap-3 px-5 py-3 rounded-xl border border-red-900/50 bg-red-950/30">
+                                <motion.span
+                                    animate={{ opacity: [1, 0.3, 1] }}
+                                    transition={{ duration: 1, repeat: Infinity }}
+                                    className="w-2 h-2 rounded-full bg-red-500 shrink-0"
+                                />
+                                <p className="font-mono text-xs text-red-400 tracking-wider uppercase">
+                                    Do not close or refresh this window
+                                </p>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             <SiteFooter />
         </main>
