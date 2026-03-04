@@ -206,8 +206,6 @@ export default function TenaniScrollAnimation() {
         eagerPreload(framePath);
         // 2) Continue loading remaining frames in background chunks
         setTimeout(() => preloadChunk(EAGER_FRAMES, framePath, totalFrames), 0);
-        // 3) Force-hide loading overlay after 2 s regardless of frame load progress
-        setTimeout(() => updateBufferUI(EAGER_FRAMES), 2000);
 
         const totalScrollPx = pxPerFrame * (totalFrames - 1);
 
@@ -468,13 +466,13 @@ export default function TenaniScrollAnimation() {
                 </div> */}
             {/* </div> */}
 
-            {/* ── End-reveal overlay: MARCH 5 + Explore Now (always visible) ── */}
+            {/* ── End-reveal overlay: MARCH 11 + Explore Now (always visible) ── */}
             <div
                 ref={overlayRef}
                 className="absolute inset-0 z-20 pointer-events-none"
                 style={{ opacity: 1, willChange: "opacity" }}
             >
-                {/* Bottom-center: MARCH 5 (glitch) + Explore Now */}
+                {/* Bottom-center: MARCH 11 (glitch) + Explore Now */}
                 <div className="absolute bottom-10 left-0 right-0 flex flex-col items-center gap-4 pointer-events-auto">
 
                     {/* IEEE CIS Glitch Title */}
@@ -489,16 +487,16 @@ export default function TenaniScrollAnimation() {
                         IEEE CIS STUDENT BRANCH CHAPTER
                     </div>
 
-                    {/* MARCH 5 — glitch date */}
+                    {/* MARCH 11 — glitch date */}
                     <div
                         className="glitch-date font-cinzel font-black text-4xl sm:text-5xl md:text-6xl tracking-[0.4em] uppercase select-none"
-                        data-text="MARCH 5"
+                        data-text="MARCH 11"
                         style={{
                             color: "#BF092F",
                             textShadow: "2px 2px 6px rgba(0,0,0,1), 4px 4px 12px rgba(0,0,0,0.8)",
                         }}
                     >
-                        MARCH 5
+                        MARCH 11
                     </div>
 
                     {/* Explore Now */}
