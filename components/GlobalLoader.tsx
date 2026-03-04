@@ -12,7 +12,7 @@ export default function GlobalLoader() {
         // Initial load animation duration
         const timeout = setTimeout(() => {
             setLoading(false);
-        }, 5000); // 5 seconds
+        }, 2000); // 2 seconds
 
         return () => clearTimeout(timeout);
     }, []);
@@ -79,7 +79,7 @@ export default function GlobalLoader() {
                             <motion.div
                                 initial={{ width: "0%" }}
                                 animate={{ width: "100%" }}
-                                transition={{ duration: 4.8, ease: "easeInOut" }}
+                                transition={{ duration: 1.8, ease: "easeInOut" }}
                                 className="absolute top-0 left-0 h-full bg-gradient-to-r from-red-600 via-red-400 to-red-600 shadow-[0_0_10px_rgba(255,0,0,0.8)]"
                             />
                         </div>

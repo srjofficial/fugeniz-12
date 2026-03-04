@@ -174,6 +174,13 @@ export default function TenaniScrollAnimation() {
 
         const variant = getVariant();
         variantRef.current = variant;
+
+        // ── Mobile: skip GSAP entirely — video loop handles the home section ──
+        if (variant === "mobile") {
+            if (bufferOverlayRef.current) bufferOverlayRef.current.style.display = "none";
+            return;
+        }
+
         const { totalFrames, framePath, pxPerFrame } = VARIANTS[variant];
 
         // Reset image cache and counters for new variant
@@ -199,6 +206,8 @@ export default function TenaniScrollAnimation() {
         eagerPreload(framePath);
         // 2) Continue loading remaining frames in background chunks
         setTimeout(() => preloadChunk(EAGER_FRAMES, framePath, totalFrames), 0);
+        // 3) Force-hide loading overlay after 2 s regardless of frame load progress
+        setTimeout(() => updateBufferUI(EAGER_FRAMES), 2000);
 
         const totalScrollPx = pxPerFrame * (totalFrames - 1);
 
@@ -319,15 +328,26 @@ export default function TenaniScrollAnimation() {
                 }}
             />
 
-            {/* ── Buffer overlay: shown until first 40 frames are ready ─── */}
+            {/* ── Mobile home video: loops in place of scroll animation ─── */}
+            <video
+                src="/home/mobile-home.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                aria-hidden="true"
+                className="md:hidden absolute inset-0 w-full h-full object-cover"
+            />
+
+            {/* ── Buffer overlay: desktop only, shown until first 40 frames are ready ─── */}
             <div
                 ref={bufferOverlayRef}
                 aria-hidden="true"
+                className="hidden md:flex"
                 style={{
                     position: "absolute",
                     inset: 0,
                     zIndex: 50,
-                    display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
@@ -353,10 +373,10 @@ export default function TenaniScrollAnimation() {
                 </div>
             </div>
 
-            {/* ── Canvas: frame renderer ──────────────────────────────────── */}
+            {/* ── Canvas: frame renderer (desktop only) ─────────────────────── */}
             <canvas
                 ref={canvasRef}
-                className="absolute inset-0 w-full h-full"
+                className="hidden md:block absolute inset-0 w-full h-full"
                 style={{ display: "block" }}
                 aria-hidden="true"
             />
