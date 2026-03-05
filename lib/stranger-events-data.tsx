@@ -12,6 +12,8 @@ export type EventData = {
     time?: string;
     venue?: string;
     registrationFee?: string;
+    ieeeFee?: string;
+    nonIeeeFee?: string;
     feeLabel?: string;
     prizePool?: string;
     rules?: ReactNode[]; // Added optional rules array
@@ -25,10 +27,15 @@ export const eventsData: Record<string, EventData> = {
         description: "Navigate the campus using high-tech clues. This event blends real-world exploration with algorithmic puzzles. Scan the hidden QR codes to unlock your next destination—but be warned: the riddles get harder as you go!",
         image: "/home/scan-seek.png",
         icon: <QrCode className="w-8 h-8 text-red-500" />,
-        date: "March 5, 2026",
-        registrationFee: "80",
+        date: "March 11, 2026",
+        time: "11:30 AM to 1:30 PM",
+        registrationFee: "80", // Keep for backwards compatibility if needed
+        ieeeFee: "50",
+        nonIeeeFee: "70",
         prizePool: "3500",
         rules: [
+            <span key="time-setup-1"><strong>Reporting Time:</strong> 10:30 AM</span>,
+            <span key="time-setup-2"><strong>Event Timing:</strong> 11:30 AM to 1:30 PM</span>,
             <span key="1"><strong>Team Structure:</strong> 2-3 members per team.</span>,
             <span key="2"><strong>Equipment:</strong> Each team will be provided with one dedicated mobile device.</span>,
             <span key="3"><strong>The Workflow:</strong> Scan the QR code at the station.<br /><br />Answer the Kusruthi Chodyam (Brain-Teaser).<br />- If Correct: You receive the clue to the next location.<br />- If Wrong:  You face a "System Failure." You must record the assigned video task on your device to unlock the next clue.</span>,
@@ -43,10 +50,15 @@ export const eventsData: Record<string, EventData> = {
         description: "In Pixel Decode, participants must craft precise, complex prompts to recreate a 'Target Image' using AI. It's a battle of vocabulary, aesthetics, and technical understanding of generative models.",
         image: "/home/pixel-decode.png",
         icon: <BrainCircuit className="w-8 h-8 text-red-500" />,
-        date: "March 5, 2026",
-        registrationFee: "50",
+        date: "March 11, 2026",
+        time: "10:00 AM to 11:30 AM",
+        registrationFee: "50", // Keep for backwards compatibility
+        ieeeFee: "30",
+        nonIeeeFee: "50",
         prizePool: "2500",
         rules: [
+            <span key="time-setup-1"><strong>Reporting Time:</strong> 9:30 AM</span>,
+            <span key="time-setup-2"><strong>Event Timing:</strong> 10:00 AM to 11:30 AM</span>,
             <span key="0"><strong>Team Size:</strong> This event requires a team of exactly 2 members.</span>,
             <span key="1"><strong>The Challenge:</strong> Participants are given a target image or a complex theme.</span>,
             <span key="2"><strong>Prompt Engineering:</strong> You must write a precise text prompt to get the AI to generate the most accurate or creative output.</span>,

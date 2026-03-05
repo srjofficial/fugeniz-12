@@ -5,10 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Calendar, MapPin } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, MapPin, Clock } from "lucide-react";
 import { eventsData } from "@/lib/stranger-events-data";
 import SiteFooter from "@/components/SiteFooter";
 import FloatingSpores from "@/components/FloatingSpores";
+import EventCountdown from "@/components/EventCountdown";
 
 // Define the expected params strictly for Next.js 15
 interface PageProps {
@@ -149,6 +150,12 @@ export default function EventPage({ params }: PageProps) {
                                 <span className="font-mono text-sm tracking-wider uppercase">{event.date}</span>
                             </div>
                         )}
+                        {event.time && (
+                            <div className="flex items-center gap-3 text-gray-300">
+                                <Clock className="w-5 h-5 text-red-500" />
+                                <span className="font-mono text-sm tracking-wider uppercase">{event.time}</span>
+                            </div>
+                        )}
                         <div className="flex items-center gap-3 text-gray-300">
                             <MapPin className="w-5 h-5 text-red-500" />
                             <span className="font-mono text-sm tracking-wider uppercase">SNGCE Campus</span>
@@ -161,6 +168,11 @@ export default function EventPage({ params }: PageProps) {
                             {event.description}
                         </p>
                     </div>
+
+                    {/* Countdown */}
+                    {event.date && event.time && (
+                        <EventCountdown targetDate={event.date} targetTime={event.time} />
+                    )}
 
                     {/* Mission Guidelines — static section */}
                     <div className="mb-12">
@@ -221,9 +233,22 @@ export default function EventPage({ params }: PageProps) {
                                     </div>
                                 )}
                                 <span className="text-zinc-500 font-mono text-xs md:text-sm uppercase tracking-[0.3em] font-bold">Registration Fee</span>
-                                <div className="text-white font-sans text-4xl md:text-6xl font-black tracking-tight">
-                                    ₹{event.registrationFee || "150"} {event.feeLabel && <span className="text-2xl md:text-3xl font-bold text-zinc-400">{event.feeLabel}</span>}
-                                </div>
+                                {(event.ieeeFee && event.nonIeeeFee) ? (
+                                    <div className="flex flex-col gap-2 w-full mt-2">
+                                        <div className="flex justify-between items-end border-b border-red-900/40 pb-2">
+                                            <span className="font-mono text-sm tracking-wider text-green-400">IEEE Member</span>
+                                            <span className="text-white font-sans text-3xl font-black">₹{event.ieeeFee}</span>
+                                        </div>
+                                        <div className="flex justify-between items-end pb-2">
+                                            <span className="font-mono text-sm tracking-wider text-red-400">Non-IEEE Member</span>
+                                            <span className="text-white font-sans text-3xl font-black">₹{event.nonIeeeFee}</span>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="text-white font-sans text-4xl md:text-6xl font-black tracking-tight">
+                                        ₹{event.registrationFee || "150"} {event.feeLabel && <span className="text-2xl md:text-3xl font-bold text-zinc-400">{event.feeLabel}</span>}
+                                    </div>
+                                )}
                             </div>
 
                             <Link href={`/events/${eventId}/register`} className="block w-full sm:w-auto">

@@ -25,6 +25,7 @@ export default function RegistrationPage({ params }: PageProps) {
     const [isSuccess, setIsSuccess] = useState(false);
     const [fileName, setFileName] = useState<string | null>(null);
     const [qrFullscreen, setQrFullscreen] = useState(false);
+    const [ieeeMembership, setIeeeMembership] = useState<string>("no");
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     if (!event) {
@@ -131,6 +132,7 @@ export default function RegistrationPage({ params }: PageProps) {
                 college: formData.get("college")?.toString() || "",
                 phone: formData.get("phone")?.toString() || "",
                 email: formData.get("email")?.toString() || "",
+                ieeeMembership: formData.get("ieeeMembership")?.toString() || "no",
                 timestamp: new Date().toISOString(),
                 fileContent: fileData.base64,
                 fileName: fileData.name,
@@ -354,14 +356,43 @@ export default function RegistrationPage({ params }: PageProps) {
                                             />
                                         </div>
                                     </div>
+
+                                    {/* IEEE Membership */}
+                                    {(event.ieeeFee && event.nonIeeeFee) && (
+                                        <div className="space-y-4 md:col-span-2">
+                                            <label className="text-red-500 font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase font-bold flex items-center gap-2">
+                                                <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse" />
+                                                Are you an IEEE Member?
+                                            </label>
+                                            <div className="relative group">
+                                                <select
+                                                    required
+                                                    id="ieeeMembership"
+                                                    name="ieeeMembership"
+                                                    value={ieeeMembership}
+                                                    onChange={(e) => setIeeeMembership(e.target.value)}
+                                                    className="w-full bg-black/50 border border-zinc-800 rounded-lg px-4 py-4 focus:outline-none focus:border-red-600 transition-all text-white appearance-none shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] cursor-pointer"
+                                                >
+                                                    <option value="no">No</option>
+                                                    <option value="yes">Yes</option>
+                                                </select>
+                                                <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                                                    <span className="text-zinc-500 font-black">▼</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Payment Section */}
                                 <div className="mt-16 pt-8 border-t border-red-900/30 relative">
-                                    <h3 className="font-cinzel text-2xl md:text-3xl text-red-500 mb-8 flex items-center gap-4 tracking-widest">
+                                    <h3 className="font-cinzel text-2xl md:text-3xl text-red-500 mb-2 flex items-center gap-4 tracking-widest">
                                         <QrCode className="w-8 h-8 opacity-70" />
                                         PAYMENT PROTOCOL
                                     </h3>
+                                    <p className="text-zinc-400 font-mono text-xs md:text-sm uppercase tracking-widest mb-8">
+                                        Total Amount Due: <span className="text-white font-black text-xl md:text-2xl drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">₹{ieeeMembership === "yes" && event.ieeeFee ? event.ieeeFee : (event.nonIeeeFee || event.registrationFee || "150")}</span>
+                                    </p>
 
                                     <div className="flex flex-col md:flex-row gap-12">
                                         <div className="relative group/qr shrink-0">

@@ -16,6 +16,7 @@ export async function POST(req: Request) {
             college: data.college,
             phone: data.phone,
             email: data.email,
+            ieeeMembership: data.ieeeMembership,
         });
 
         if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes("PASTE_YOUR_SCRIPT_URL_HERE")) {
@@ -31,6 +32,7 @@ export async function POST(req: Request) {
             college: data.college || "",
             phone: data.phone || "",
             email: data.email || "",
+            ieeeMembership: data.ieeeMembership || "no",
             timestamp: data.timestamp || new Date().toISOString(),
             fileContent: data.fileContent || "",
             fileName: data.fileName || "",
