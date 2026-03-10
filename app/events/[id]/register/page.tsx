@@ -329,7 +329,14 @@ export default function RegistrationPage({ params }: PageProps) {
                                                 name="phone"
                                                 type="tel"
                                                 autoComplete="tel"
-                                                placeholder="+91 XXXX XXX XXX"
+                                                placeholder="10 DIGIT NUMBER"
+                                                pattern="[0-9]{10}"
+                                                maxLength={10}
+                                                minLength={10}
+                                                onInput={(e) => {
+                                                    e.currentTarget.value = e.currentTarget.value.replace(/\D/g, '').slice(0, 10);
+                                                }}
+                                                title="Please enter exactly 10 digits"
                                                 className="w-full bg-black/80 border-b-2 border-red-900/50 px-10 py-5 focus:outline-none focus:border-red-500 focus:bg-red-900/10 transition-all text-white placeholder:text-zinc-700 font-cinzel text-lg tracking-widest rounded-t-lg"
                                             />
                                         </div>
